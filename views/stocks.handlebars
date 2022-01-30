@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">InvSys</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/brands">Brands</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/parts">Parts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/stocks">Stocks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/units">Units</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dispatches">Dispatches</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<div class="container-fluid">
+  <div class="row border">
+    <div class="col-sm-3 border-end">
+      <form class="p-2" action="/stocks" method="post">
+        <div class="row mb-2">
+          <select id="part" class="form-select form-select-sm" name="part">
+            <option selected>Choose a part...</option>
+            {{#each parts}}
+            <option value="{{this._id}}">{{this.name}} ({{this.brand.name}}) {{this.quantity}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="row mb-2">
+          <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty.">
+        </div>
+        <div class="row mb-2">
+          <input type="number" id="price" class="form-control form-control-sm" name="price" placeholder="Price">
+        </div>
+        <div class="row">
+          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+        </div>
+        <div class="row d-none">
+          <div class="d-flex justify-content-around px-0">
+            <a href="#" class="editStock btn btn-secondary btn-sm d-inline w-25" data-id="{{this._id}}">Edit</a>
+            <a href="#" class="deleteStock btn btn-danger btn-sm d-inline w-25" data-id="{{this._id}}">Delete</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col p-2">
+      <span class="badge bg-secondary">Stocks Count: {{stocksCount}}</span>
+      <br><br>
+      {{#if stocks}}
+        <table class="table table-sm table-bordered small">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th class="col-1 text-center">Action</th>
+            </tr>
+          </thead>
+          {{#each stocks}}
+            <tr>
+              <td>{{this.part.name}}</td>
+              <td>{{this.quantity}} pc</td>
+              <td>{{this.price}} pesos</td>
+              <td class="text-center">
+                <a href="#" class="editStock link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
+                <a href="#" class="deleteStock link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{/if}}
+    </div>
+  </div>
+</div>

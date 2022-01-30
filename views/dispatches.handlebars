@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">InvSys</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/brands">Brands</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/parts">Parts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stocks">Stocks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/units">Units</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/dispatches">Dispatches</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<div class="container-fluid">
+  <div class="row border">
+    <div class="col-sm-3 border-end">
+      <form id="editDispatchForm" class="p-2" action="/dispatches" method="post">
+        <div class="row mb-2">
+          <select id="unit" class="form-select form-select-sm" name="unit" required>
+            <option selected>Choose a unit...</option>
+            {{#each units}}
+              <!-- <option class="text-uppercase" value="{{this._id}}">{{this.name}}</option> -->
+              <option class="text-uppercase" value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="row mb-2">
+          <select id="stock" class="form-select form-select-sm" name="stock" required>
+            <option selected>Choose a stock...</option>
+            {{#each stocks}}
+              <!-- <option value="{{this._id}}">{{this.part.name}} ({{this.part.brand.name}}) <span class="badge bg-secondary">{{this.quantity}}pcs {{this.price}}pesos</span></option> -->
+              <option value="{{this.part.name}}">{{this.part.name}} ({{this.part.brand.name}}) <span class="badge bg-secondary">{{this.quantity}}pcs {{this.price}}pesos</span></option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="row mb-2">
+          <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty." required>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="col p-2">
+      <span class="badge bg-secondary">Dispatches Count: {{dispatchesCount}}</span>
+      <br><br>
+      {{#if dispatches}}
+        <table class="table table-sm table-bordered small">
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {{#each dispatches}}
+            <tr>
+              <td>{{this.unit}}</td>
+              <td>{{this.stock}}</td>
+              <td>{{this.quantity}}pc</td>
+              <td>
+                <a href="#" class="editDispatch link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
+                <a href="#" class="deleteDispatch link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{/if}}
+    </div>
+  </div>
+</div>

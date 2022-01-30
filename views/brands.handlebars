@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">InvSys</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/brands">Brands</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/parts">Parts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stocks">Stocks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/units">Units</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dispatches">Dispatches</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<div class="container-fluid">
+  <div class="row border">
+    <div class="col-sm-3 border-end">
+      <form id="brandForm" class="p-2" action="/brands" method="post">
+        <div class="row mb-2">
+          <input type="text" class="form-control form-control-sm" name="brandname" id="brandName" placeholder="Brandname..." required>
+        </div>
+        <div class="row">
+          <input class="btn btn-primary btn-sm edit"  type="submit" value="Submit">
+          <input type="button" class="btn btn-secondary btn-sm cancel-btn" value="Cancel">
+        </div>
+      </form>
+    </div>
+    <div class="col p-2">
+      <span class="badge bg-secondary">Brands Count: {{brandsCount}}</span>
+      <br><br>
+      <ul class="list-group">
+        {{#each brands}}
+        <li class="list-group-item d-flex justify-content-between">{{this.name}}
+          <div>
+            <a href="#" class="editBrand link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
+            <a href="#" class="deleteBrand link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>

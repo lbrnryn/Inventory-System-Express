@@ -1,0 +1,100 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">InvSys</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/brands">Brands</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/parts">Parts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stocks">Stocks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/units">Units</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dispatches">Dispatches</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<div class="container-fluid">
+  <div class="row border">
+    <div class="col-sm-3 border-end">
+      <form id="editForm" class="p-2" action="/parts" method="POST">
+        <div class="row mb-2">
+          <input type="text" id="partName" class="form-control form-control-sm" name="partname" placeholder="Partname" required>
+        </div>
+        <div class="row mb-2">
+          <select id="brandName" class="form-select form-select-sm" name="brandname" required>
+            <option selected>Select brand</option>
+            {{#each brands}}
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="row">
+          <input id="submitBtn" class="btn btn-primary btn-sm submit-btn"  type="submit" value="Submit">
+          <!-- <input type="button" class="btn btn-secondary btn-sm cancel-btn" value="Cancel"> -->
+          <!-- <div class="hiddenBtn">
+            <a href="#" class="btn btn-light btn-sm">Cancel</a>
+            <a href="#" class="deletePart btn btn-danger btn-sm" data-id="">Delete</a>
+          </div> -->
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-4 p-2">
+      <span class="badge bg-secondary">Parts Count: {{partsCount}}</span>
+      <br><br>
+      {{#if parts}}
+        <table class="table table-sm table-bordered small">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Brand</th>
+              <th class="col-1"></th>
+            </tr>
+          </thead>
+          {{#each parts}}
+            <tr>
+              <td>{{this.name}}</td>
+              <td>{{this.brand.name}}</td>
+              <td class="text-center">
+                <a href="#" class="editPart link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
+                <a href="#" class="deletePart link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{/if}}
+    </div>
+    <div class="col p-2 border-start">
+      <!-- {{#each dispatches}}
+        <a href="#" class="btn btn-outline-primary btn-sm getPart" data-id="{{this._id}}" data-name="">{{this.stock.part.name}}</a>
+      {{/each}} -->
+      {{#each parts}}
+        <a href="#" class="btn btn-outline-primary btn-sm getPart" data-id="{{this._id}}" data-name="{{this.name}}">{{this.name}}</a>
+      {{/each}}
+      <br><br>
+      <table class="table table-sm table-bordered small">
+        <tr>
+          <th>Date</th>
+          <th>Unit</th>
+          <th>Quantity</th>
+        </tr>
+        <tbody id="partOutput"></tbody>
+      </table>
+    </div>
+  </div>
+</div>

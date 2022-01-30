@@ -1,0 +1,6 @@
+1) Create store schema
+2) Add to existing stocks
+3) Decide whether disabling the quantity field when editing a stock
+4) Create history for all records for (CRUD)
+5) Use controller folder
+6) Use dark mode

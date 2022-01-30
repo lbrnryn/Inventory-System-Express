@@ -1,0 +1,22 @@
+{
+  "name": "inventorysystem",
+  "version": "1.0.0",
+  "description": "Inventory System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "author": "Ryan Libron",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "luxon": "^2.3.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.1.5"
+  }
+}
