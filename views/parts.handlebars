@@ -40,7 +40,7 @@
           <select id="brandName" class="form-select form-select-sm" name="brandname" required>
             <option selected>Select brand</option>
             {{#each brands}}
-              <option value="{{this._id}}">{{this.name}}</option>
+              <option value="{{this.name}}">{{this.name}}</option>
             {{/each}}
           </select>
         </div>
@@ -58,13 +58,13 @@
             <tr>
               <th>Item</th>
               <th>Brand</th>
-              <th class="col-1"></th>
+              <th class="col-2"></th>
             </tr>
           </thead>
           {{#each parts}}
             <tr>
               <td>{{this.name}}</td>
-              <td>{{this.brand.name}}</td>
+              <td>{{this.brand}}</td>
               <td class="text-center">
                 <a href="#" class="editPart link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
                 <a href="#" class="deletePart link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>

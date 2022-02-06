@@ -6,6 +6,7 @@ exports.getBrands = async (req, res, next) => {
   const brandsCount = await Brand.count();
 
   res.render('brands', { brands, brandsCount });
+  // res.json(brands)
 }
 
 // Add a Brand

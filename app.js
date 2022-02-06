@@ -19,6 +19,9 @@ const stock = require('./routes/stock');
 const unit = require('./routes/unit');
 const dispatch = require('./routes/dispatch');
 
+// API
+const api = require('./routes/api');
+
 // Put this mongoose connection to other folder
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/inventory');
@@ -30,7 +33,7 @@ const app = express();
 
 app.use(methodOverride("_method"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // false dapat
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('handlebars', engine());
@@ -62,11 +65,19 @@ app.get('/', async (req, res) => { //app.get('/', testMiddleware, async (req, re
   });
 });
 
+// app.get('/animals', (req, res) => {
+//   console.log(req.query)
+//   // console.log(req.query.page, req.query.test)
+//   res.json({msg:'ok'})
+// })
+
 app.use('/brands', brand);
 app.use('/parts', part);
 app.use('/stocks', stock);
 app.use('/units', unit);
 app.use('/dispatches', dispatch);
+
+app.use('/api', api);
 
 const port = 1000;
 

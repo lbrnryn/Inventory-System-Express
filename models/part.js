@@ -7,10 +7,7 @@ const partSchema = new mongoose.Schema({
     type: String,
     uppercase: true
   },
-  brand: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Brand'
-  },
+  brand: String,
   createdAt: {
     type: String,
     default: DateTime.now().toLocaleString(),

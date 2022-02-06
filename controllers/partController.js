@@ -1,16 +1,13 @@
 const Part = require('../models/part');
 const Brand = require('../models/brand');
-const Dispatch = require('../models/dispatch');
 
 // Get All Parts
 exports.getParts = async (req, res, next) => {
   const brands = await Brand.find().lean();
-  const parts = await Part.find().populate('brand').lean();
+  const parts = await Part.find().lean();
   const partsCount = await Part.count();
-  // const dispatches = await Dispatch.find().populate('unit').populate({ path: 'stock', model: 'Stock', populate: { path: 'part', model: 'Part', populate: { path: 'brand', model: 'Brand' } } }).lean();
-  const dispatches = await Dispatch.find().lean();
 
-  res.render('parts', { parts, partsCount, brands, dispatches });
+  res.render('parts', { parts, partsCount, brands });
 }
 
 // Add Single Part
@@ -56,11 +53,3 @@ exports.deletePart = async (req, res, next) => {
   await Part.findByIdAndDelete({ _id: req.params.id });
   res.json({ msg: 'Part deleted...'})
 }
-
-// Get All Dispatch Record related to this part name
-exports.getPartRecord = async (req, res, next) => {
-  // console.log(req.params.partname);
-  // const partRecords = await Part.find({ name: req.params.partname }).populate('brand').lean();
-  const partRecords = await Dispatch.find({ stock: req.params.partname }).lean();
-  res.json(partRecords);
-};

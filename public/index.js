@@ -67,17 +67,18 @@ deleteBrands.forEach((deleteBrand) => {
 //   })
 // }
 
-// Get Each Part Records
+// Get Each Part Records in Dispatch
 getParts.forEach((getPart) => {
   getPart.addEventListener("click", (e) => {
-    // console.log(e.target.dataset.name);
+    console.log(e.target.dataset.name);
     const partName = e.target.dataset.name;
-    const url = `http://localhost:1000/parts/records/${partName}`;
+    // const url = `http://localhost:1000/parts/records/${partName}`;
+    const url = `http://localhost:1000/api/dispatches?stock=${partName}`;
 
     try {
       http.get(url)
       .then(data => {
-        // console.log(data)
+        console.log(data)
         let output = "";
         data.forEach((data, i) => {
           output += `
@@ -169,7 +170,7 @@ deleteStocks.forEach((deleteStock) => {
     try {
       http.remove(url)
         .then(data => console.log(data));
-        window.location.href = '/brands';
+        window.location.href = '/stocks';
     } catch (err) { console.log(err.message) }
     e.preventDefault();
   });

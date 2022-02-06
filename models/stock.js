@@ -3,10 +3,7 @@ const { DateTime } = require('luxon');
 const Part = require('./part');
 
 const stockSchema = new mongoose.Schema({
-  part: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Part'
-  },
+  part: String,
   quantity: Number,
   price: Number,
   createdAt: {

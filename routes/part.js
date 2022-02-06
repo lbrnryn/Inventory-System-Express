@@ -1,5 +1,5 @@
 const express = require('express');
-const { getParts, addPart, getPart, updatePart, deletePart, getPartRecord } = require('../controllers/partController');
+const { getParts, addPart, getPart, updatePart, deletePart } = require('../controllers/partController');
 const router = express.Router();
 
 router
@@ -12,9 +12,5 @@ router
   .get(getPart)
   .put(updatePart)
   .delete(deletePart);
-
-router
-  .route('/records/:partname')
-  .get(getPartRecord);
 
 module.exports = router;

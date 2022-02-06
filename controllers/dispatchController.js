@@ -11,7 +11,6 @@ exports.getDispatches = async (req, res, next) => {
   const units = await Unit.find().lean();
   const parts = await Part.find().populate('brand').lean();
   const stocks = await Stock.find({ quantity: { $gt: 0 } }).populate({ path: 'part', model: 'Part', populate: { path: 'brand', model: 'Brand' } }).lean();
-  // const dispatches = await Dispatch.find().populate('unit').populate({ path: 'stock', model: 'Stock', populate: { path: 'part', model: 'Part', populate: { path: 'brand', model: 'Brand' } } }).lean();
   const dispatchesCount = await Dispatch.count();
   const dispatches = await Dispatch.find().lean();
 

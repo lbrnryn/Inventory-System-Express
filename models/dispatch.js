@@ -2,14 +2,6 @@ const mongoose = require('mongoose');
 const { DateTime } = require('luxon');
 
 const dispatchSchema = new mongoose.Schema({
-  // unit: {
-  //   type: mongoose.Types.ObjectId,
-  //   ref: 'Unit'
-  // },
-  // stock: {
-  //   type: mongoose.Types.ObjectId,
-  //   ref: 'Stock'
-  // },
   unit: String,
   stock: String,
   quantity: Number,
