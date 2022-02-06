@@ -26,12 +26,12 @@ exports.addPart = (req, res, next) => {
   })
 }
 
-// Get Single Part
-exports.getPart = async (req, res, next) => {
-  // console.log(req.params.id)
-  const part = await Part.findById({ _id: req.params.id }).populate('brand').lean();
-  res.json(part);
-}
+// // Get Single Part
+// exports.getPart = async (req, res, next) => {
+//   // console.log(req.params.id)
+//   const part = await Part.findById({ _id: req.params.id }).populate('brand').lean();
+//   res.json(part);
+// }
 
 // Update Single Part
 exports.updatePart = (req, res, next) => {

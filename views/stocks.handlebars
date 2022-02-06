@@ -32,12 +32,12 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form class="p-2" action="/stocks" method="post">
+      <form id="editForm" class="p-2" action="/stocks" method="post">
         <div class="row mb-2">
           <select id="part" class="form-select form-select-sm" name="part">
             <option selected>Choose a part...</option>
             {{#each parts}}
-            <option value="{{this._id}}">{{this.name}} ({{this.brand.name}}) {{this.quantity}}</option>
+            <option value="{{this.name}}">{{this.name}} ({{this.brand}})</option>
             {{/each}}
           </select>
         </div>
@@ -48,7 +48,7 @@
           <input type="number" id="price" class="form-control form-control-sm" name="price" placeholder="Price">
         </div>
         <div class="row">
-          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+          <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button>
         </div>
         <div class="row d-none">
           <div class="d-flex justify-content-around px-0">
@@ -73,7 +73,7 @@
           </thead>
           {{#each stocks}}
             <tr>
-              <td>{{this.part.name}}</td>
+              <td>{{this.part}}</td>
               <td>{{this.quantity}} pc</td>
               <td>{{this.price}} pesos</td>
               <td class="text-center">

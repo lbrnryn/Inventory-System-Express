@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUnits, addUnit, getUnit, deleteUnit } = require('../controllers/unitController');
+const { getUnits, addUnit, deleteUnit } = require('../controllers/unitController');
 const router = express.Router();
 
 router
@@ -9,7 +9,7 @@ router
 
 router
   .route('/:id')
-  .get(getUnit)
+  // .get(getUnit)
   .delete(deleteUnit);
 
 module.exports = router;

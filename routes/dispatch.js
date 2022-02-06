@@ -9,7 +9,7 @@ router
 
 router
   .route('/:id')
-  .get(getDispatch)
-  .put(updateDispatch);
+  // .get(getDispatch)
+  // .put(updateDispatch);
 
 module.exports = router;

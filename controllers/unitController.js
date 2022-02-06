@@ -26,13 +26,13 @@ exports.addUnit = (req, res, next) => {
   });
 }
 
-// Get Single Unit
-exports.getUnit = async (req, res, next) => {
-  console.log(req.params)
-  const unit = await Unit.findById(req.params.id);
-  const dispatch = await Dispatch.find({ unit: req.params.id }).populate('unit').populate({ path: 'stock', model: 'Stock', populate: { path: 'part', model: 'Part', populate: { path: 'brand', model: 'Brand' } } });
-  res.json({unit, dispatch});
-}
+// // Get Single Unit
+// exports.getUnit = async (req, res, next) => {
+//   console.log(req.params)
+//   const unit = await Unit.findById(req.params.id);
+//   const dispatch = await Dispatch.find({ unit: req.params.id });
+//   res.json({unit, dispatch});
+// }
 
 // Delete Single Unit
 exports.deleteUnit = async (req, res, next) => {

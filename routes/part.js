@@ -9,7 +9,7 @@ router
 
 router
   .route('/:id')
-  .get(getPart)
+  // .get(getPart)
   .put(updatePart)
   .delete(deletePart);
 

@@ -27,14 +27,15 @@ let http = new Http();
 editBrands.forEach((editBrand) => {
   editBrand.addEventListener('click', (e) => {
     const id = e.target.parentElement.dataset.id;
-    const url = `http://localhost:1000/brands/${id}`;
+    // const url = `http://localhost:1000/brands/${id}`;
+    const url = `http://localhost:1000/api/brands?_id=${id}`;
 
     try {
       http.get(url)
       .then(data => {
-        console.log(data)
-        document.getElementById("brandName").value = data.name;
-        document.getElementById("brandForm").action = `/brands/${data._id}?_method=PUT`;
+        console.log(data[0])
+        document.getElementById("brandName").value = data[0].name;
+        document.getElementById("brandForm").action = `/brands/${data[0]._id}?_method=PUT`;
       })
     } catch (err) { console.log(err.message) }
     e.preventDefault();
@@ -70,7 +71,7 @@ deleteBrands.forEach((deleteBrand) => {
 // Get Each Part Records in Dispatch
 getParts.forEach((getPart) => {
   getPart.addEventListener("click", (e) => {
-    console.log(e.target.dataset.name);
+    // console.log(e.target.dataset.name);
     const partName = e.target.dataset.name;
     // const url = `http://localhost:1000/parts/records/${partName}`;
     const url = `http://localhost:1000/api/dispatches?stock=${partName}`;
@@ -78,7 +79,7 @@ getParts.forEach((getPart) => {
     try {
       http.get(url)
       .then(data => {
-        console.log(data)
+        // console.log(data)
         let output = "";
         data.forEach((data, i) => {
           output += `
@@ -101,18 +102,18 @@ editParts.forEach((editPart) => {
   editPart.addEventListener("click", (e) => {
     // console.log(e.target.parentElement.dataset.id);
     const id = e.target.parentElement.dataset.id;
-    // console.log(id);
-    const url = `http://localhost:1000/parts/${id}`;
+    // const url = `http://localhost:1000/parts/${id}`;
+    const url = `http://localhost:1000/api/parts?_id=${id}`;
 
     try {
       http.get(url)
         .then(data => {
-          // console.log(data);
-          document.getElementById("partName").value = data.name;
-          document.getElementById("brandName").getElementsByTagName("option")[0].innerText = data.brand.name;
-          document.getElementById("brandName").getElementsByTagName("option")[0].value = data.brand._id;
+          // console.log(data[0]);
+          document.getElementById("partName").value = data[0].name;
+          document.getElementById("brandName").getElementsByTagName("option")[0].innerText = data[0].brand;
+          document.getElementById("brandName").getElementsByTagName("option")[0].value = data[0].brand;
           document.getElementById("submitBtn").value = "Edit"
-          document.getElementById("editForm").action = `parts/${data._id}?_method=PUT`;
+          document.getElementById("editForm").action = `parts/${data[0]._id}?_method=PUT`;
         })
     } catch (err) { console.log(err.message) }
     e.preventDefault();
@@ -141,18 +142,22 @@ deleteParts.forEach((deletePart) => {
 // Edit Single Stock
 editStocks.forEach((editStock) => {
   editStock.addEventListener("click", (e) => {
+    // console.log(e.target.parentElement.dataset.id);
     const id = e.target.parentElement.dataset.id;
-    const url = `http://localhost:1000/stocks/${id}`;
+    // const url = `http://localhost:1000/stocks/${id}`;
+    const url = `http://localhost:1000/api/stocks?_id=${id}`;
 
     try {
       http.get(url)
         .then(data => {
-          // console.log(data);
-          document.getElementById("part").getElementsByTagName("option")[0].innerText = data.part.name;
-          document.getElementById("part").getElementsByTagName("option")[0].value = data._id;
-          document.getElementById("quantity").value = data.quantity;
-          document.getElementById("quantity").disabled = true;
-          document.getElementById("price").value = data.price;
+          console.log(data[0]);
+          document.getElementById("part").getElementsByTagName("option")[0].innerText = data[0].part;
+          document.getElementById("part").getElementsByTagName("option")[0].value = data[0].part;
+          document.getElementById("quantity").value = data[0].quantity;
+          document.getElementById("quantity").readOnly = true;
+          document.getElementById("price").value = data[0].price;
+          document.getElementById("submitBtn").innerHTML = 'Edit';
+          document.getElementById("editForm").action = `stocks/${data[0]._id}?_method=PUT`;
         })
     } catch (err) { console.log(err.message) }
     e.preventDefault();
@@ -168,9 +173,11 @@ deleteStocks.forEach((deleteStock) => {
     const url = `http://localhost:1000/stocks/${id}`;
 
     try {
-      http.remove(url)
-        .then(data => console.log(data));
+      if (confirm('Are you sure you want to delete?')) {
+        http.remove(url)
+          .then(data => console.log(data));
         window.location.href = '/stocks';
+      }
     } catch (err) { console.log(err.message) }
     e.preventDefault();
   });
@@ -197,63 +204,72 @@ deleteUnits.forEach((deleteUnit) => {
 getUnits.forEach((getUnit) => {
   getUnit.addEventListener('click', (e) => {
     const id = e.target.dataset.id;
-    const unitUrl = `http://localhost:1000/units/${id}`;
+    const unitNum = e.target.dataset.name;
+    // console.log(id, unit)
+    // const url = `http://localhost:1000/units/${id}`;
+    const unitUrl = `http://localhost:1000/api/units?_id=${id}`;
+    const dispatchUrl = `http://localhost:1000/api/dispatches?unit=${unitNum}`;
 
     try {
-      http.get(url)
+      const unit = http.get(unitUrl);
+      const dispatch = http.get(dispatchUrl);
+      Promise.all([unit, dispatch])
         .then(data => {
-          // console.log(data.dispatch[0].quantity);
+          // console.log(data[1]);
           let output = "";
 
           output += `
-          <h3>${data.unit.name}</h3>
+          <h3>${data[0][0].name}</h3>
           <br>
           <ul class="list-group">
-          <li class="list-group-item">Date Acquired: ${data.unit.createdAt}</li>
+          <li class="list-group-item">Date Acquired: ${data[0][0].createdAt}</li>
           </ul>
           <br>
           `
           document.getElementById("output").innerHTML = output;
 
           let output2 = "";
-          data.dispatch.forEach((data) => {
-            // console.log(data._id)
+          data[1].forEach((data) => {
+            // console.log(data)
             output2 += `
             <tr>
             <td>${data.createdAt}</td>
-            <td>${data.unit.name}</td>
-            <td>Change ${data.stock.part.name}</td>
+            <td>${data.unit}</td>
+            <td>Change ${data.stock}</td>
             <td>${data.quantity} pc</td>
             <td>${data.stock.price} pesos</td>
             </tr>
             `
             document.getElementById("output2").innerHTML = output2;
           });
-        });
+        })
     } catch (err) { console.log(err.message) }
     e.preventDefault();
   });
 });
 
-// Edit Single Dispatch
-editDispatches.forEach((editDispatch) => {
-  editDispatch.addEventListener("click", (e) => {
-    // console.log(e.target.parentElement.dataset.id);
-    const id = e.target.parentElement.dataset.id;
-    const url = `http://localhost:1000/dispatches/${id}`;
-
-    try {
-      http.get(url)
-        .then(data => {
-          // console.log(data);
-          document.getElementById("unit").getElementsByTagName("option")[0].innerText = data.unit.name;
-          document.getElementById("unit").getElementsByTagName("option")[0].value = data.unit._id;
-          document.getElementById("stock").getElementsByTagName("option")[0].innerText = data.stock.part.name;
-          document.getElementById("stock").getElementsByTagName("option")[0].value = data.stock._id;
-          document.getElementById("quantity").value = data.quantity;
-          document.getElementById("editDispatchForm").action = `dispatches/${data._id}?_method=PUT`;
-        })
-    } catch (err) { console.log(err.message) }
-    e.preventDefault();
-  })
-});
+// // Edit Single Dispatch
+// editDispatches.forEach((editDispatch) => {
+//   editDispatch.addEventListener("click", (e) => {
+//     // console.log(e.target.parentElement.dataset.id);
+//     const id = e.target.parentElement.dataset.id;
+//     // const url = `http://localhost:1000/dispatches/${id}`;
+//     const url = `http://localhost:1000/api/dispatches?_id=${id}`;
+//
+//     try {
+//       http.get(url)
+//         .then(data => {
+//           console.log(data[0]);
+//           document.getElementById("unit").getElementsByTagName("option")[0].innerText = data[0].unit;
+//           document.getElementById("unit").getElementsByTagName("option")[0].value = data[0].unit;
+//           document.getElementById("stock").getElementsByTagName("option")[0].innerText = data[0].stock
+//           document.getElementById("stock").getElementsByTagName("option")[0].value = data[0].stock;
+//           document.getElementById("quantity").value = data[0].quantity;
+//           document.getElementById("quantity").readOnly= true;
+//           document.getElementById("editDispatchForm").action = `dispatches/${data[0]._id}?_method=PUT`;
+//           document.getElementById("submitBtn").innerHTML = 'Edit';
+//         })
+//     } catch (err) { console.log(err.message) }
+//     e.preventDefault();
+//   })
+// });

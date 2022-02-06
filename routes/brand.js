@@ -9,7 +9,7 @@ router
 
 router
   .route('/:id')
-  .get(getBrand) // Get Single Brand
+  // .get(getBrand) // Get Single Brand
   .put(updateBrand) // Edit Single Brand
   .delete(deleteBrand); // Delete Single Brand
 

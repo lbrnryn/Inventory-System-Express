@@ -24,13 +24,13 @@ exports.addBrand = (req, res, next) => {
   })
 }
 
-// Get Single Brand
-exports.getBrand = async (req, res, next) => {
-  // console.log(req.params.id)
-  const result = await Brand.findById({ _id: req.params.id }).lean();
-  // // console.log(result);
-  res.json(result);
-}
+// // Get Single Brand
+// exports.getBrand = async (req, res, next) => {
+//   // console.log(req.params.id)
+//   const result = await Brand.findById({ _id: req.params.id }).lean();
+//   // // console.log(result);
+//   res.json(result);
+// }
 
 // Edit Single Brand
 exports.updateBrand = async (req, res, next) => {

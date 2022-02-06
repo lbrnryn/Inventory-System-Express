@@ -37,7 +37,6 @@
           <select id="unit" class="form-select form-select-sm" name="unit" required>
             <option selected>Choose a unit...</option>
             {{#each units}}
-              <!-- <option class="text-uppercase" value="{{this._id}}">{{this.name}}</option> -->
               <option class="text-uppercase" value="{{this.name}}">{{this.name}}</option>
             {{/each}}
           </select>
@@ -46,8 +45,7 @@
           <select id="stock" class="form-select form-select-sm" name="stock" required>
             <option selected>Choose a stock...</option>
             {{#each stocks}}
-              <!-- <option value="{{this._id}}">{{this.part.name}} ({{this.part.brand.name}}) <span class="badge bg-secondary">{{this.quantity}}pcs {{this.price}}pesos</span></option> -->
-              <option value="{{this.part.name}}">{{this.part.name}} ({{this.part.brand.name}}) <span class="badge bg-secondary">{{this.quantity}}pcs {{this.price}}pesos</span></option>
+              <option value="{{this.part}}">{{this.part}} ({{this.part.brand.name}})</option>
             {{/each}}
           </select>
         </div>
@@ -55,7 +53,7 @@
           <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty." required>
         </div>
         <div class="row">
-          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+          <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button>
         </div>
       </form>
     </div>
@@ -69,7 +67,7 @@
               <th>Unit</th>
               <th>Item</th>
               <th>Quantity</th>
-              <th>Action</th>
+              <!-- <th>Action</th> -->
             </tr>
           </thead>
           {{#each dispatches}}
@@ -77,10 +75,10 @@
               <td>{{this.unit}}</td>
               <td>{{this.stock}}</td>
               <td>{{this.quantity}}pc</td>
-              <td>
+              <!-- <td>
                 <a href="#" class="editDispatch link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
                 <a href="#" class="deleteDispatch link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
-              </td>
+              </td> -->
             </tr>
           {{/each}}
         </table>
