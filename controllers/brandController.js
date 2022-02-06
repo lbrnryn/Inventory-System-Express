@@ -50,4 +50,5 @@ exports.updateBrand = async (req, res, next) => {
 exports.deleteBrand = async (req, res, next) => {
   // console.log(req.params.id)
   await Brand.findByIdAndDelete({ _id: req.params.id });
+  res.json({ msg: `Brand deleted...` })
 }

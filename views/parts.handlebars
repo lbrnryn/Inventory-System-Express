@@ -46,11 +46,6 @@
         </div>
         <div class="row">
           <input id="submitBtn" class="btn btn-primary btn-sm submit-btn"  type="submit" value="Submit">
-          <!-- <input type="button" class="btn btn-secondary btn-sm cancel-btn" value="Cancel"> -->
-          <!-- <div class="hiddenBtn">
-            <a href="#" class="btn btn-light btn-sm">Cancel</a>
-            <a href="#" class="deletePart btn btn-danger btn-sm" data-id="">Delete</a>
-          </div> -->
         </div>
       </form>
     </div>
@@ -80,9 +75,6 @@
       {{/if}}
     </div>
     <div class="col p-2 border-start">
-      <!-- {{#each dispatches}}
-        <a href="#" class="btn btn-outline-primary btn-sm getPart" data-id="{{this._id}}" data-name="">{{this.stock.part.name}}</a>
-      {{/each}} -->
       {{#each parts}}
         <a href="#" class="btn btn-outline-primary btn-sm getPart" data-id="{{this._id}}" data-name="{{this.name}}">{{this.name}}</a>
       {{/each}}

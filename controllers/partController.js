@@ -54,6 +54,7 @@ exports.updatePart = (req, res, next) => {
 exports.deletePart = async (req, res, next) => {
   // console.log(req.params.id)
   await Part.findByIdAndDelete({ _id: req.params.id });
+  res.json({ msg: 'Part deleted...'})
 }
 
 // Get All Dispatch Record related to this part name

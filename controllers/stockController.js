@@ -41,4 +41,5 @@ exports.getStock = async (req, res, next) => {
 // Delete Single Stock
 exports.deleteStock = async (req, res, next) => {
   await Stock.findByIdAndDelete({ _id: req.params.id });
+  res.json({ msg: 'Stock deleted...' })
 }

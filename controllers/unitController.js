@@ -38,4 +38,5 @@ exports.getUnit = async (req, res, next) => {
 exports.deleteUnit = async (req, res, next) => {
   // console.log(req.params.id)
   await Unit.findByIdAndDelete({ _id: req.params.id });
+  res.json({ msg: 'Unit deleted...' })
 }
