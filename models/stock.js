@@ -4,6 +4,7 @@ const Part = require('./part');
 
 const stockSchema = new mongoose.Schema({
   part: String,
+  brand: String,
   quantity: Number,
   price: Number,
   createdAt: {

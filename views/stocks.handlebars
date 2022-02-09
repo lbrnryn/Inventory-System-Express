@@ -32,13 +32,18 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form id="editForm" class="p-2" action="/stocks" method="post">
+      <form id="editForm" class="p-2" action="/api/stocks" method="post">
         <div class="row mb-2">
-          <select id="part" class="form-select form-select-sm" name="part">
+          <select id="partSelect" class="form-select form-select-sm" name="part">
             <option selected>Choose a part...</option>
             {{#each parts}}
             <option value="{{this.name}}">{{this.name}} ({{this.brand}})</option>
             {{/each}}
+          </select>
+        </div>
+        <div class="row mb-2">
+          <select class="form-select form-select-sm" name="brand">
+            <option selected>Choose a brand...</option>
           </select>
         </div>
         <div class="row mb-2">
@@ -66,6 +71,7 @@
           <thead>
             <tr>
               <th>Item</th>
+              <th>Brand</th>
               <th>Quantity</th>
               <th>Price</th>
               <th class="col-1 text-center">Action</th>
@@ -74,6 +80,7 @@
           {{#each stocks}}
             <tr>
               <td>{{this.part}}</td>
+              <td class="text-capitalize">{{this.brand}}</td>
               <td>{{this.quantity}} pc</td>
               <td>{{this.price}} pesos</td>
               <td class="text-center">

@@ -1,13 +1,9 @@
-const Part = require('../models/part');
-const Stock = require('../models/stock');
+const Stock = require('../../models/stock');
 
 // Get All Stocks
 exports.getStocks = async (req, res, next) => {
-  const parts = await Part.find().populate('brand').lean();
-  const stocks = await Stock.find().sort({ part: 'desc' }).lean();
-  const stocksCount = await Stock.count();
-
-  res.render('stocks', { parts, stocks, stocksCount });
+  const stocks = await Stock.find(req.query);
+  res.json(stocks);
 }
 
 // Add Single Stock
@@ -27,12 +23,11 @@ exports.addStock = (req, res, next) => {
   });
 }
 
-// // Get Single Stock
-// exports.getStock = async (req, res, next) => {
-//   // console.log(req.params.id);
-//   const result = await Stock.findById({ _id: req.params.id }).lean();
-//   res.json(result);
-// }
+// Get Single Stock
+exports.getStock = async (req, res, next) => {
+  const result = await Stock.findById({ _id: req.params.id });
+  res.json(result);
+}
 
 exports.updateStock = (req, res, next) => {
   const { part, quantity, price } = req.body;

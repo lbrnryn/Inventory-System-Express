@@ -12,16 +12,6 @@ const Unit = require('./models/unit');
 const Stock = require('./models/stock');
 const Dispatch = require('./models/dispatch');
 
-//Routes
-const brand = require('./routes/brand');
-const part = require('./routes/part');
-const stock = require('./routes/stock');
-const unit = require('./routes/unit');
-const dispatch = require('./routes/dispatch');
-
-// API
-const api = require('./routes/api');
-
 // Put this mongoose connection to other folder
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/inventory');
@@ -49,35 +39,35 @@ app.set('json spaces', 2);
 // }
 
 app.get('/', async (req, res) => { //app.get('/', testMiddleware, async (req, res) => {
-  // console.log('app.get/')
-  const brandsCount = await Brand.count();
-  const partsCount = await Part.count();
-  const unitsCount = await Unit.count();
-  const stocksCount = await Stock.count();
-  const dispatchesCount = await Dispatch.count();
-
-  res.render('dashboard', {
-    brandsCount,
-    partsCount,
-    unitsCount,
-    stocksCount,
-    dispatchesCount
-  });
+  // const brandsCount = await Brand.count();
+  // const partsCount = await Part.count();
+  // const unitsCount = await Unit.count();
+  // const stocksCount = await Stock.count();
+  // const dispatchesCount = await Dispatch.count();
+  //
+  // res.render('dashboard', {
+  //   brandsCount,
+  //   partsCount,
+  //   unitsCount,
+  //   stocksCount,
+  //   dispatchesCount
+  // });
+  res.redirect('/brands');
 });
 
-// app.get('/animals', (req, res) => {
-//   console.log(req.query)
-//   // console.log(req.query.page, req.query.test)
-//   res.json({msg:'ok'})
-// })
+// Views Routes
+app.use('/brands', require('./routes/viewsRoutes/brandView'));
+app.use('/parts', require('./routes/viewsRoutes/partView'));
+app.use('/stocks', require('./routes/viewsRoutes/stockView'));
+app.use('/units', require('./routes/viewsRoutes/unitView'));
+app.use('/dispatches', require('./routes/viewsRoutes/dispatchView'));
 
-app.use('/brands', brand);
-app.use('/parts', part);
-app.use('/stocks', stock);
-app.use('/units', unit);
-app.use('/dispatches', dispatch);
-
-app.use('/api', api);
+// Api Routes
+app.use('/api/brands', require('./routes/apiRoutes/brandAPI'));
+app.use('/api/parts', require('./routes/apiRoutes/partAPI'));
+app.use('/api/stocks', require('./routes/apiRoutes/stockAPI'));
+app.use('/api/units', require('./routes/apiRoutes/unitAPI'));
+app.use('/api/dispatches', require('./routes/apiRoutes/dispatchAPI'));
 
 const port = 1000;
 
