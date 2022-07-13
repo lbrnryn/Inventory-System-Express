@@ -32,7 +32,7 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form class="p-2" action="/api/units" method="post">
+      <form class="p-2" action="/units" method="post">
         <div class="row mb-2">
           <input type="text" class="form-control form-control-sm" name="unitname" id="unitName" placeholder="Unit Ex. ABC123/1234" pattern="[A-Za-z]{3}[0-9]{3,4}" required>
         </div>
@@ -42,11 +42,11 @@
       </form>
     </div>
     <div class="col p-2">
-      <span class="badge bg-secondary">Units Count: {{unitsCount}}</span>
+      <span class="badge bg-secondary">Units Count: {{units.length}}</span>
       <br><br>
       <div class="d-flex flex-wrap">
         {{#each units}}
-          <a href="#" class="btn btn-secondary me-1 mb-1 getUnit" data-id="{{this._id}}" data-name="{{this.name}}">{{this.name}}</a>
+          <button type="button" class="btn btn-secondary me-1 mb-1 getUnit" data-url="{{this.url}}">{{this.name}}</button>
         {{/each}}
       </div>
       <br><br>

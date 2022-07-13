@@ -6,11 +6,7 @@ const stockSchema = new mongoose.Schema({
   part: String,
   brand: String,
   quantity: Number,
-  price: Number,
-  createdAt: {
-    type: String,
-    default: DateTime.now().toLocaleString(),
-  }
-});
+  price: Number
+}, { timestamps: true });
 
 module.exports = mongoose.model('Stock', stockSchema);

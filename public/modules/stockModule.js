@@ -7,10 +7,31 @@ export function stockModule() {
   let http = new Http();
 
   const partSelect = document.getElementById("partSelect");
-  partSelect.addEventListener("change", myEvent);
+  if (partSelect) {
+    partSelect.addEventListener("change", () => {
+      // console.log(partSelect.value);
+      const name = partSelect.value;
+      const url = `http://localhost:1000/api/parts?name=${name}`;
+      // console.log(url);
+      http.get(url)
+        .then(data => {
+          // console.log(data);
+          const brandSelect = document.getElementById("brandSelect");
+          console.log(document.getElementById("brandSelect").querySelectorAll("option").length)
+          brandSelect.options.remove(1);
+          const brands = data.map((data) => {
+            return data.brand
+          })
 
-  function myEvent() {
-    // console.log('change');
+          brands.forEach((brand, i) => {
+            const opt = document.createElement("option");
+            opt.value = brand;
+            opt.innerHTML = brand;
+            brandSelect.appendChild(opt);
+          });
+          console.log(document.getElementById("brandSelect").querySelectorAll("option").length)
+        })
+    });
   }
 
   // Edit Single Stock

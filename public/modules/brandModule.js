@@ -1,43 +1,48 @@
-import { Http } from './httpClass.js';
-
 export const brandModule = () => {
   const editBrands = document.querySelectorAll(".editBrand");
-  const deleteBrands = document.querySelectorAll(".deleteBrand");
-
-  let http = new Http();
+  const deleteBrandForms = document.querySelectorAll(".deleteBrandForm");
+  const brandName = document.getElementById("brandName");
+  const brandForm = document.getElementById("brandForm");
+  const brandEditBtn = document.querySelector(".brandEditBtn");
+  const brandCancelBtn = document.querySelector(".brandCancelBtn");
 
   // Edit Single Brand
   editBrands.forEach((editBrand) => {
     editBrand.addEventListener('click', (e) => {
-      const id = e.target.parentElement.dataset.id;
-      const url = `http://localhost:1000/api/brands/${id}`;
-
       try {
-        http.get(url)
-        .then(data => {
-          console.log(data)
-          document.getElementById("brandName").value = data.name;
-          document.getElementById("brandForm").action = `/brands/${data._id}?_method=PUT`;
-        })
+        if (e.target.parentElement.classList.contains("editBrand")) {
+          const url = e.target.parentElement.dataset.url;
+
+          fetch(url)
+            .then(res => res.json())
+            .then(data => {
+              brandName.value = data.name;
+              brandForm.action = `/brands/${data._id}?_method=PUT`;
+              brandEditBtn.value = "Edit";
+              brandCancelBtn.style.display = "block";
+            });
+        }
       } catch (err) { console.log(err.message) }
-      e.preventDefault();
     })
   });
 
-  // Delete Single Brand
-  deleteBrands.forEach((deleteBrand) => {
-    deleteBrand.addEventListener('click', (e) => {
-      const id = e.target.parentElement.dataset.id;
-      const url = `http://localhost:1000/api/brands/${id}`;
+  // Edit Cancel Button
+  if (brandCancelBtn) {
+    brandCancelBtn.addEventListener("click", () => {
+      brandName.value = "";
+      brandForm.action = "/brands";
+      brandEditBtn.value = "Submit";
+      brandCancelBtn.style.display = "none";
+    })
+  }
 
-      try {
-        if (confirm('Are you sure you want to delete?')) {
-          http.remove(url)
-          .then(data => console.log(data));
-          window.location.href = '/brands';
-        }
-      } catch (err) { console.log(err.message) }
-      e.preventDefault();
+  // Delete Single Brand
+  deleteBrandForms.forEach((deleteBrandForm) => {
+    deleteBrandForm.addEventListener("submit", (e) => {
+      if (!confirm("Are you sure you want to delete this brand?")) {
+        e.preventDefault();
+      }
     });
   });
+
 }

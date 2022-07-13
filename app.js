@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const methodOverride = require('method-override');
-
+require('dotenv').config();
 // Models
 const Brand = require('./models/brand');
 const Part = require('./models/part');
@@ -26,50 +26,35 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // false dapat
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
+app.engine('.hbs', engine({
+  extname: '.hbs',
+  runtimeOptions: { allowProtoPropertiesByDefault: true }
+}));
+app.set('view engine', 'hbs');
 app.set('views', './views');
 
 // Make JSON pretty formatted
 app.set('json spaces', 2);
 
-// function testMiddleware(req, res, next) {
-//   console.log('this is a test');
-//   next();
-// }
-
-app.get('/', async (req, res) => { //app.get('/', testMiddleware, async (req, res) => {
-  // const brandsCount = await Brand.count();
-  // const partsCount = await Part.count();
-  // const unitsCount = await Unit.count();
-  // const stocksCount = await Stock.count();
-  // const dispatchesCount = await Dispatch.count();
-  //
-  // res.render('dashboard', {
-  //   brandsCount,
-  //   partsCount,
-  //   unitsCount,
-  //   stocksCount,
-  //   dispatchesCount
-  // });
+app.get('/', async (req, res, next) => {
   res.redirect('/brands');
 });
 
 // Views Routes
-app.use('/brands', require('./routes/viewsRoutes/brandView'));
-app.use('/parts', require('./routes/viewsRoutes/partView'));
-app.use('/stocks', require('./routes/viewsRoutes/stockView'));
-app.use('/units', require('./routes/viewsRoutes/unitView'));
-app.use('/dispatches', require('./routes/viewsRoutes/dispatchView'));
+app.use('/brands', require('./routes/brand'));
+app.use('/parts', require('./routes/part'));
+app.use('/stocks', require('./routes/stock'));
+app.use('/units', require('./routes/unit'));
+app.use('/dispatches', require('./routes/dispatch'));
 
 // Api Routes
-app.use('/api/brands', require('./routes/apiRoutes/brandAPI'));
-app.use('/api/parts', require('./routes/apiRoutes/partAPI'));
-app.use('/api/stocks', require('./routes/apiRoutes/stockAPI'));
-app.use('/api/units', require('./routes/apiRoutes/unitAPI'));
-app.use('/api/dispatches', require('./routes/apiRoutes/dispatchAPI'));
+app.use('/api/brands', require('./routes/api/brand'));
+app.use('/api/parts', require('./routes/api/part'));
+app.use('/api/stocks', require('./routes/api/stock'));
+app.use('/api/units', require('./routes/api/unit'));
+app.use('/api/dispatches', require('./routes/api/dispatch'));
 
-const port = 1000;
+const port = process.env.PORT || 1000;
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

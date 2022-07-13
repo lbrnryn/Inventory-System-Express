@@ -32,25 +32,28 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form id="brandForm" class="p-2" action="/api/brands" method="post">
+      <form id="brandForm" class="p-2" action="/brands" method="post">
         <div class="row mb-2">
           <input type="text" class="form-control form-control-sm" name="brandname" id="brandName" placeholder="Brandname..." required>
         </div>
         <div class="row">
-          <input class="btn btn-primary btn-sm edit"  type="submit" value="Submit">
-          <input type="button" class="btn btn-secondary btn-sm cancel-btn" value="Cancel">
+          <input class="btn btn-primary btn-sm brandEditBtn" type="submit" value="Submit">
+          <input type="button" class="btn btn-secondary btn-sm brandCancelBtn" value="Cancel">
         </div>
       </form>
     </div>
     <div class="col p-2">
-      <span class="badge bg-secondary">Brands Count: {{brandsCount}}</span>
+      <span class="badge bg-secondary">Brands Count: {{brands.length}}</span>
       <br><br>
       <ul class="list-group">
         {{#each brands}}
         <li class="list-group-item d-flex justify-content-between">{{this.name}}
-          <div>
-            <a href="#" class="editBrand link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
-            <a href="#" class="deleteBrand link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+          <div class="d-flex">
+            <!-- <a href="#" class="editBrand link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
+            <button type="button" class="editBrand btn btn-sm btn-primary" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+            <form action="/brands/{{this._id}}?_method=DELETE" class="deleteBrandForm" method="post">
+              <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+            </form>
           </div>
         </li>
         {{/each}}

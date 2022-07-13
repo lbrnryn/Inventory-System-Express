@@ -4,11 +4,7 @@ const { DateTime } = require('luxon');
 const dispatchSchema = new mongoose.Schema({
   unit: String,
   stock: String,
-  quantity: Number,
-  createdAt: {
-    type: String,
-    default: DateTime.now().toLocaleString(),
-  }
-});
+  quantity: Number
+}, { timestamps: true });
 
 module.exports = mongoose.model('Dispatch', dispatchSchema);

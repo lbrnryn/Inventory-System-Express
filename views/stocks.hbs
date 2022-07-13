@@ -37,12 +37,12 @@
           <select id="partSelect" class="form-select form-select-sm" name="part">
             <option selected>Choose a part...</option>
             {{#each parts}}
-            <option value="{{this.name}}">{{this.name}} ({{this.brand}})</option>
+            <option value="{{this.name}}">{{this.name}}</option> <!--//({{this.brand}})-->
             {{/each}}
           </select>
         </div>
         <div class="row mb-2">
-          <select class="form-select form-select-sm" name="brand">
+          <select id="brandSelect" class="form-select form-select-sm" name="brand">
             <option selected>Choose a brand...</option>
           </select>
         </div>
@@ -64,7 +64,7 @@
       </form>
     </div>
     <div class="col p-2">
-      <span class="badge bg-secondary">Stocks Count: {{stocksCount}}</span>
+      <span class="badge bg-secondary">Stocks Count: {{stocks.length}}</span>
       <br><br>
       {{#if stocks}}
         <table class="table table-sm table-bordered small">

@@ -6,11 +6,7 @@ const unitSchema = new mongoose.Schema({
   name: {
     type: String,
     uppercase: true
-  },
-  createdAt: {
-    type: String,
-    default: DateTime.now().toLocaleString(),
   }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Unit', unitSchema);

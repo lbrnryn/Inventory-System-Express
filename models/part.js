@@ -7,11 +7,7 @@ const partSchema = new mongoose.Schema({
     type: String,
     uppercase: true
   },
-  brand: String,
-  createdAt: {
-    type: String,
-    default: DateTime.now().toLocaleString(),
-  }
-})
+  brand: String
+}, { timestamps: true })
 
 module.exports = mongoose.model('Part', partSchema);
