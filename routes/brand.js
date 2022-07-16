@@ -15,7 +15,6 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const nameExist = await Brand.findOne({ name: req.body.brandname });
-
     if (nameExist) {
       console.log('Name is already exist');
       res.redirect('/brands');

@@ -32,20 +32,21 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form id="editForm" class="p-2" action="/api/parts" method="POST">
+      <form id="partForm" class="p-2" action="/parts" method="POST">
         <div class="row mb-2">
           <input type="text" id="partName" class="form-control form-control-sm" name="partname" placeholder="Partname" required>
         </div>
         <div class="row mb-2">
           <select id="brandName" class="form-select form-select-sm" name="brandname" required>
-            <option selected>Select brand</option>
+            <option value="">Select brand</option>
             {{#each brands}}
-              <option value="{{this.name}}">{{this.name}}</option>
+              <option value="{{this._id}}">{{this.name}}</option>
             {{/each}}
           </select>
         </div>
         <div class="row">
-          <input id="submitBtn" class="btn btn-primary btn-sm submit-btn"  type="submit" value="Submit">
+          <input class="btn btn-sm btn-primary partEditBtn" type="submit" value="Submit">
+          <button type="button" class="btn btn-secondary btn-sm partCancelBtn">Cancel</button>
         </div>
       </form>
     </div>
@@ -64,17 +65,22 @@
           {{#each parts}}
             <tr>
               <td>{{this.name}}</td>
-              <td>{{this.brand}}</td>
-              <td class="text-center">
-                <a href="#" class="editPart link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
-                <a href="#" class="deletePart link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+              <td>{{this.brand.name}}</td>
+              <td class="text-center d-flex">
+                <!-- <a href="#" class="editPart link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
+                <button type="button" class="btn btn-sm btn-primary editPart" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+                <!-- <a href="#" class="deletePart link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a> -->
+                <form action="/parts/{{this._id}}?_method=DELETE" class="deletePartForm"  method="post">
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+                </form>
               </td>
             </tr>
           {{/each}}
         </table>
       {{/if}}
     </div>
-    <div class="col p-2 border-start">
+
+    <!-- <div class="col p-2 border-start">
       {{#each parts}}
         <a href="#" class="btn btn-outline-primary btn-sm getPart" data-id="{{this._id}}" data-name="{{this.name}}">{{this.name}}</a>
       {{/each}}
@@ -87,6 +93,7 @@
         </tr>
         <tbody id="partOutput"></tbody>
       </table>
-    </div>
+    </div> -->
+
   </div>
 </div>

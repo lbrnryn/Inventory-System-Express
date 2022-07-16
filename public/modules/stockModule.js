@@ -1,79 +1,93 @@
-import { Http } from './httpClass.js';
-
 export function stockModule() {
   const editStocks = document.querySelectorAll(".editStock");
-  const deleteStocks = document.querySelectorAll(".deleteStock");
-
-  let http = new Http();
-
-  const partSelect = document.getElementById("partSelect");
-  if (partSelect) {
-    partSelect.addEventListener("change", () => {
-      // console.log(partSelect.value);
-      const name = partSelect.value;
-      const url = `http://localhost:1000/api/parts?name=${name}`;
-      // console.log(url);
-      http.get(url)
+  // const deleteStocks = document.querySelectorAll(".deleteStock");
+  const deleteStockForms = document.querySelectorAll(".deleteStockForm");
+  const partName = document.querySelector("#partName");
+  const quantity = document.querySelector("#quantity");
+  const price = document.querySelector("#price");
+  const stockForm = document.querySelector("#stockForm");
+  const stockEditBtn = document.querySelector(".stockEditBtn");
+  const stockCancelBtn = document.querySelector(".stockCancelBtn");
+  const selectPartName = document.querySelector("select#partName");
+  const selectBrandName = document.querySelector("select#brandName");
+  // console.log(selectPartName)
+  if (selectPartName) {
+    selectPartName.addEventListener("input", (e) => {
+      // console.log(e.target.value);
+      if (e.target.value == "") {
+        selectBrandName.disabled = true;
+        selectBrandName.innerHTML = "";
+        stockEditBtn.disabled = true;
+        return;
+      }
+      fetch(`http://localhost:1000/api/parts?name=${e.target.value}`)
+        .then(res => res.json())
         .then(data => {
-          // console.log(data);
-          const brandSelect = document.getElementById("brandSelect");
-          console.log(document.getElementById("brandSelect").querySelectorAll("option").length)
-          brandSelect.options.remove(1);
-          const brands = data.map((data) => {
-            return data.brand
-          })
+          // console.log(data)
+          selectBrandName.disabled = false;
 
-          brands.forEach((brand, i) => {
-            const opt = document.createElement("option");
-            opt.value = brand;
-            opt.innerHTML = brand;
-            brandSelect.appendChild(opt);
+          let output = "";
+          data.forEach((data) => {
+            output += `
+              <option value="${data.brand.name}">${data.brand.name}</option>
+            `
           });
-          console.log(document.getElementById("brandSelect").querySelectorAll("option").length)
-        })
+          selectBrandName.innerHTML = output;
+          stockEditBtn.disabled = false;
+        });
+
     });
   }
 
   // Edit Single Stock
   editStocks.forEach((editStock) => {
     editStock.addEventListener("click", (e) => {
-      // console.log(e.target.parentElement.dataset.id);
-      const id = e.target.parentElement.dataset.id;
-      const url = `http://localhost:1000/api/stocks/${id}`;
-
       try {
-        http.get(url)
-          .then(data => {
-            console.log(data);
-            document.getElementById("partSelect").getElementsByTagName("option")[0].innerText = data.part;
-            document.getElementById("partSelect").getElementsByTagName("option")[0].value = data.part;
-            document.getElementById("quantity").value = data.quantity;
-            document.getElementById("quantity").readOnly = true;
-            document.getElementById("price").value = data.price;
-            document.getElementById("submitBtn").innerHTML = 'Edit';
-            document.getElementById("editForm").action = `stocks/${data._id}?_method=PUT`;
-          })
-      } catch (err) { console.log(err.message) }
-      e.preventDefault();
-    });
-  });
+        if (e.target.parentElement.classList.contains("editStock")) {
+          const url = e.target.parentElement.dataset.url;
 
-
-  // Delete Single Stock
-  deleteStocks.forEach((deleteStock) => {
-    deleteStock.addEventListener("click", (e) => {
-      // console.log(e.target.parentElement.dataset.id);
-      const id = e.target.parentElement.dataset.id;
-      const url = `http://localhost:1000/api/stocks/${id}`;
-
-      try {
-        if (confirm('Are you sure you want to delete?')) {
-          http.remove(url)
-            .then(data => console.log(data));
-          window.location.href = '/stocks';
+          fetch(url)
+            .then(res => res.json())
+            .then(data => {
+              // console.log(data)
+              stockForm.action = `/stocks/${data._id}?_method=PUT`;
+              partName.getElementsByTagName("option")[0].innerText = data.part.name;
+              partName.getElementsByTagName("option")[0].value = data.part._id;
+              selectBrandName.disabled = false;
+              selectBrandName.innerHTML = `<option value="${data.part.brand}">${data.part.brand}</option>`;
+              quantity.value = data.quantity;
+              price.value = data.price;
+              stockEditBtn.value = "Edit";
+              stockCancelBtn.style.display = "block";
+            })
         }
       } catch (err) { console.log(err.message) }
-      e.preventDefault();
     });
   });
+
+// Edit Cancel Button
+  if (stockCancelBtn) {
+    stockCancelBtn.addEventListener("click", () => {
+      stockForm.action = "/stocks";
+      partName.getElementsByTagName("option")[0].innerText = "Select a part";
+      partName.getElementsByTagName("option")[0].value = "";
+      quantity.value = "";
+      price.value = "";
+      stockEditBtn.value = "Submit";
+      stockCancelBtn.style.display = "none";
+    })
+  }
+
+  // Delete Single Stock
+  deleteStockForms.forEach((deleteStockForm) => {
+    deleteStockForm.addEventListener("submit", (e) => {
+      try {
+        if (!confirm('Are you sure you want to delete this stock?')) {
+          e.preventDefault();
+          return;
+        }
+      } catch (err) { console.log(err.message) }
+    });
+  });
+
 }

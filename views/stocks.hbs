@@ -32,35 +32,43 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form id="editForm" class="p-2" action="/api/stocks" method="post">
+      <form id="stockForm" class="p-2" action="/stocks" method="post">
         <div class="row mb-2">
-          <select id="partSelect" class="form-select form-select-sm" name="part">
-            <option selected>Choose a part...</option>
+          <select id="partName" class="form-select form-select-sm" name="partname" required>
+            <option value="">Choose a part...</option>
+            <!-- {{#each parts}}
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}} -->
             {{#each parts}}
-            <option value="{{this.name}}">{{this.name}}</option> <!--//({{this.brand}})-->
+              <option value="{{this.name}}">{{this.name}}</option>
             {{/each}}
           </select>
         </div>
         <div class="row mb-2">
-          <select id="brandSelect" class="form-select form-select-sm" name="brand">
-            <option selected>Choose a brand...</option>
+          <select id="brandName" class="form-select form-select-sm" name="brandname" required disabled>
+            <!-- <option value="">Choose a brand...</option> -->
+            <!-- {{#each brands}}
+              <option value="{{this.name}}">{{this.name}}</option>
+            {{/each}} -->
           </select>
         </div>
         <div class="row mb-2">
-          <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty.">
+          <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty." required>
         </div>
         <div class="row mb-2">
-          <input type="number" id="price" class="form-control form-control-sm" name="price" placeholder="Price">
+          <input type="number" id="price" class="form-control form-control-sm" name="price" placeholder="Price" required>
         </div>
         <div class="row">
-          <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button>
+          <!-- <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button> -->
+          <input class="btn btn-sm btn-primary stockEditBtn" type="submit" value="Submit" disabled>
+          <button type="button" class="btn btn-secondary btn-sm stockCancelBtn">Cancel</button>
         </div>
-        <div class="row d-none">
+        <!-- <div class="row d-none">
           <div class="d-flex justify-content-around px-0">
             <a href="#" class="editStock btn btn-secondary btn-sm d-inline w-25" data-id="{{this._id}}">Edit</a>
             <a href="#" class="deleteStock btn btn-danger btn-sm d-inline w-25" data-id="{{this._id}}">Delete</a>
           </div>
-        </div>
+        </div> -->
       </form>
     </div>
     <div class="col p-2">
@@ -79,13 +87,17 @@
           </thead>
           {{#each stocks}}
             <tr>
-              <td>{{this.part}}</td>
-              <td class="text-capitalize">{{this.brand}}</td>
+              <td>{{this.part.name}}</td>
+              <td class="text-capitalize">{{this.part.brand}}</td>
               <td>{{this.quantity}} pc</td>
               <td>{{this.price}} pesos</td>
               <td class="text-center">
-                <a href="#" class="editStock link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
-                <a href="#" class="deleteStock link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>
+                <!-- <a href="#" class="editStock link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
+                <button type="button" class="btn btn-sm btn-primary editStock" data-url={{this.url}}><i class="bi bi-pencil-fill"></i></button>
+                <!-- <a href="#" class="deleteStock link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a> -->
+                <form action="/stocks/{{this._id}}?_method=DELETE" class="deleteStockForm" method="post">
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+                </form>
               </td>
             </tr>
           {{/each}}

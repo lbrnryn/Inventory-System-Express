@@ -1,8 +1,8 @@
 export const brandModule = () => {
   const editBrands = document.querySelectorAll(".editBrand");
   const deleteBrandForms = document.querySelectorAll(".deleteBrandForm");
-  const brandName = document.getElementById("brandName");
-  const brandForm = document.getElementById("brandForm");
+  const brandName = document.querySelector("#brandName");
+  const brandForm = document.querySelector("#brandForm");
   const brandEditBtn = document.querySelector(".brandEditBtn");
   const brandCancelBtn = document.querySelector(".brandCancelBtn");
 
@@ -16,8 +16,8 @@ export const brandModule = () => {
           fetch(url)
             .then(res => res.json())
             .then(data => {
-              brandName.value = data.name;
               brandForm.action = `/brands/${data._id}?_method=PUT`;
+              brandName.value = data.name;
               brandEditBtn.value = "Edit";
               brandCancelBtn.style.display = "block";
             });
@@ -29,8 +29,8 @@ export const brandModule = () => {
   // Edit Cancel Button
   if (brandCancelBtn) {
     brandCancelBtn.addEventListener("click", () => {
-      brandName.value = "";
       brandForm.action = "/brands";
+      brandName.value = "";
       brandEditBtn.value = "Submit";
       brandCancelBtn.style.display = "none";
     })
@@ -41,6 +41,7 @@ export const brandModule = () => {
     deleteBrandForm.addEventListener("submit", (e) => {
       if (!confirm("Are you sure you want to delete this brand?")) {
         e.preventDefault();
+        return;
       }
     });
   });

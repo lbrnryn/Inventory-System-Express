@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 const { DateTime } = require('luxon');
 
 const brandSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    uppercase: true
-  }
+  name: { type: String, uppercase: true, trim: true}
 }, { timestamps: true });
 
 module.exports = mongoose.model('Brand', brandSchema);

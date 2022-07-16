@@ -50,7 +50,7 @@
         <li class="list-group-item d-flex justify-content-between">{{this.name}}
           <div class="d-flex">
             <!-- <a href="#" class="editBrand link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
-            <button type="button" class="editBrand btn btn-sm btn-primary" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+            <button type="button" class="btn btn-sm btn-primary editBrand" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
             <form action="/brands/{{this._id}}?_method=DELETE" class="deleteBrandForm" method="post">
               <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
             </form>
