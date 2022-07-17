@@ -59,19 +59,19 @@
             <tr>
               <th>Item</th>
               <th>Brand</th>
-              <th class="col-2"></th>
+              <th class="col-2">Action</th>
             </tr>
           </thead>
           {{#each parts}}
             <tr>
               <td>{{this.name}}</td>
               <td>{{this.brand.name}}</td>
-              <td class="text-center d-flex">
+              <td class="d-flex align-items-center">
                 <!-- <a href="#" class="editPart link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
-                <button type="button" class="btn btn-sm btn-primary editPart" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+                <button type="button" class="badge bg-primary border-0 editPart" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
                 <!-- <a href="#" class="deletePart link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a> -->
                 <form action="/parts/{{this._id}}?_method=DELETE" class="deletePartForm"  method="post">
-                  <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+                  <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash-fill"></i></button>
                 </form>
               </td>
             </tr>

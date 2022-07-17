@@ -91,12 +91,12 @@
               <td class="text-capitalize">{{this.part.brand}}</td>
               <td>{{this.quantity}} pc</td>
               <td>{{this.price}} pesos</td>
-              <td class="text-center">
+              <td class="d-flex align-items-center">
                 <!-- <a href="#" class="editStock link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
-                <button type="button" class="btn btn-sm btn-primary editStock" data-url={{this.url}}><i class="bi bi-pencil-fill"></i></button>
+                <button type="button" class="badge bg-primary border-0 editStock" data-url={{this.url}}><i class="bi bi-pencil-fill"></i></button>
                 <!-- <a href="#" class="deleteStock link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a> -->
                 <form action="/stocks/{{this._id}}?_method=DELETE" class="deleteStockForm" method="post">
-                  <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+                  <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash-fill"></i></button>
                 </form>
               </td>
             </tr>

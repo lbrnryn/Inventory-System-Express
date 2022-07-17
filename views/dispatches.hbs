@@ -32,26 +32,26 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form id="editDispatchForm" class="p-2" action="/api/dispatches" method="post">
+      <form id="editDispatchForm" class="p-2" action="/dispatches" method="post">
         <div class="row mb-2">
-          <select id="unit" class="form-select form-select-sm" name="unit" required>
-            <option selected>Choose a unit...</option>
+          <select id="plateNumber" class="form-select form-select-sm" name="plateNumber" required>
+            <option value="">Choose a unit...</option>
             {{#each units}}
-              <option class="text-uppercase" value="{{this.name}}">{{this.name}}</option>
+              <option class="text-uppercase" value="{{this.plateNumber}}">{{this.plateNumber}}</option>
             {{/each}}
           </select>
         </div>
         <div class="row mb-2">
           <select id="stock" class="form-select form-select-sm" name="stock" required>
-            <option selected>Choose a stock...</option>
+            <option value="">Choose a stock...</option>
             {{#each stocks}}
-              <option value="{{this.part}}">{{this.part}} ({{this.part.brand.name}})</option>
+              <option value="{{this._id}}">{{this.part.name}} ({{this.part.brand}})</option>
             {{/each}}
           </select>
         </div>
-        <div class="row mb-2">
+        <!-- <div class="row mb-2">
           <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty." required>
-        </div>
+        </div> -->
         <div class="row">
           <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button>
         </div>
@@ -66,15 +66,18 @@
             <tr>
               <th>Unit</th>
               <th>Item</th>
+              <th>Brand</th>
               <th>Quantity</th>
-              <!-- <th>Action</th> -->
+              <th>Price</th>
             </tr>
           </thead>
           {{#each dispatches}}
             <tr>
-              <td>{{this.unit}}</td>
-              <td>{{this.stock}}</td>
-              <td>{{this.quantity}}pc</td>
+              <td>{{this.plateNumber}}</td>
+              <td>{{this.stock.part.name}}</td>
+              <td>{{this.stock.part.brand}}</td>
+              <td>{{this.stock.quantity}}pc</td>
+              <td>{{this.stock.price}}</td>
               <!-- <td>
                 <a href="#" class="editDispatch link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a>
                 <a href="#" class="deleteDispatch link-danger" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></a>

@@ -8,24 +8,6 @@ router.get('/', async (req, res, next) => {
   res.json(dispatches);
 });
 
-// Add Single Dispatch
-router.post('/', async (req, res, next) => {
-  try {
-    const { unit, stock, quantity } = req.body;
-
-    const dispatch = new Dispatch({
-      unit: unit,
-      stock: stock,
-      quantity: quantity
-    });
-
-    dispatch.save((err, dispatch) => {
-      if (err) { console.log(err.message); }
-      res.redirect('/dispatches');
-    });
-  } catch (err) { console.log(err.message) }
-});
-
 // Get Single Dispatch /dispatches/:id
 router.get('/:id', async (req, res, next) => {
   try {

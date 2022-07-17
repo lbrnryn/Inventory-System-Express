@@ -9,7 +9,8 @@ router.get('/', async (req, res, next) => {
   } catch (err) { console.log(err.message) }
 });
 
-router.get('/', async (req, res, next) => {
+// Get a unit - GET /api/units/:id
+router.get('/:id', async (req, res, next) => {
   try {
     const unit = await Unit.findById(req.params.id);
     res.json(unit);

@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-const { DateTime } = require('luxon');
 
-const dispatchSchema = new mongoose.Schema({
-  unit: String,
-  stock: String,
-  quantity: Number
+const dispatch = new mongoose.Schema({
+  plateNumber: String,
+  stock: { type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Dispatch', dispatchSchema);
+module.exports = mongoose.model('Dispatch', dispatch);

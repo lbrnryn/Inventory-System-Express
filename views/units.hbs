@@ -34,10 +34,10 @@
     <div class="col-sm-3 border-end">
       <form class="p-2" action="/units" method="post">
         <div class="row mb-2">
-          <input type="text" class="form-control form-control-sm" name="unitname" id="unitName" placeholder="Unit Ex. ABC123/1234" pattern="[A-Za-z]{3}[0-9]{3,4}" required>
+          <input type="text" class="form-control form-control-sm" name="plateNumber" id="plateNumber" placeholder="Unit Ex. ABC123/1234" pattern="[A-Za-z]{3}[0-9]{3,4}" required>
         </div>
         <div class="row">
-          <input class="btn btn-primary btn-sm"  type="submit" value="Submit">
+          <input class="btn btn-primary btn-sm" type="submit" value="Submit">
         </div>
       </form>
     </div>
@@ -46,16 +46,16 @@
       <br><br>
       <div class="d-flex flex-wrap">
         {{#each units}}
-          <button type="button" class="btn btn-secondary me-1 mb-1 getUnit" data-url="{{this.url}}">{{this.name}}</button>
+          <button type="button" class="btn btn-secondary me-1 mb-1 getUnit" data-url="{{this.url}}">{{this.plateNumber}}</button>
         {{/each}}
       </div>
       <br><br>
       <div class="container px-0">
         <div id="output">
         </div>
-        <div>
+        <!-- <div>
           <table id="output2" class="table table-sm table-bordered"></table>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

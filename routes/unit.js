@@ -11,17 +11,15 @@ router.get('/', async (req, res, next) => {
       const { _id } = unit;
       unit.url = `http://localhost:${process.env.PORT}/api/units/${_id}`;
     });
-
-    const parts = await Part.find();
-    res.render('units', { units, parts });
+    res.render('units', { units });
   } catch (err) { console.log(err.message) }
 });
 
 // Add a unit - POST /units
 router.post('/', async (req, res, next) => {
   try {
-    const { unitname } = req.body;
-    await Unit.create({ name: unitname });
+    const { plateNumber } = req.body;
+    await Unit.create({ plateNumber });
     res.redirect('/units');
   } catch (err) { console.log(err.message) }
 });

@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     const brands = await Brand.find();
     const parts = await Part.find().populate('brand').lean();
     parts.forEach(part => part.url = `http://localhost:${process.env.PORT}/api/parts/${part._id}`);
-    console.log(parts)
+    // console.log(parts)
     res.render('parts', { parts, brands });
   } catch (err) { console.log(err.message) }
 });

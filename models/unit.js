@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
-const { DateTime } = require('luxon');
 const Part = require('./part');
 
-const unitSchema = new mongoose.Schema({
-  name: {
+const unit = new mongoose.Schema({
+  plateNumber: {
     type: String,
     uppercase: true
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Unit', unitSchema);
+module.exports = mongoose.model('Unit', unit);

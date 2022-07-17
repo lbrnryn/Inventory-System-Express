@@ -71,6 +71,8 @@ export function stockModule() {
       stockForm.action = "/stocks";
       partName.getElementsByTagName("option")[0].innerText = "Select a part";
       partName.getElementsByTagName("option")[0].value = "";
+      selectBrandName.disabled = true;
+      selectBrandName.innerHTML = "";
       quantity.value = "";
       price.value = "";
       stockEditBtn.value = "Submit";
