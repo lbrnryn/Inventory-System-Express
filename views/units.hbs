@@ -32,26 +32,54 @@
 <div class="container-fluid">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form class="p-2" action="/units" method="post">
+      <form id="unitForm" class="p-2" action="/units" method="post">
         <div class="row mb-2">
           <input type="text" class="form-control form-control-sm" name="plateNumber" id="plateNumber" placeholder="Unit Ex. ABC123/1234" pattern="[A-Za-z]{3}[0-9]{3,4}" required>
         </div>
         <div class="row">
-          <input class="btn btn-primary btn-sm" type="submit" value="Submit">
+          <input class="btn btn-primary btn-sm unitEditBtn" type="submit" value="Submit">
+          <button type="button" class="btn btn-secondary btn-sm unitCancelBtn">Cancel</button>
         </div>
       </form>
     </div>
     <div class="col p-2">
       <span class="badge bg-secondary">Units Count: {{units.length}}</span>
       <br><br>
-      <div class="d-flex flex-wrap">
+      <!-- <div class="d-flex flex-wrap">
         {{#each units}}
           <button type="button" class="btn btn-secondary me-1 mb-1 getUnit" data-url="{{this.url}}">{{this.plateNumber}}</button>
         {{/each}}
+      </div> -->
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        {{#each units}}
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#unit{{this._id}}" type="button">{{this.plateNumber}}</button>
+          </li>
+        {{/each}}
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        {{#each units}}
+          <div class="tab-pane fade" id="unit{{this._id}}" tabindex="0">
+            <div class="d-flex justify-content-end gap-2">
+              <button class="badge bg-primary border-0 editUnit" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+              <!-- <button class="badge bg-danger border-0 deleteUnit"><i class="bi bi-trash-fill"></i></button> -->
+              <form action="/units/{{this._id}}?_method=DELETE" class="deleteUnitForm" method="post">
+                <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash-fill"></i></button>
+              </form>
+            </div>
+            <h3>{{this.plateNumber}}</h3>
+            <br>
+            <ul class="list-group">
+              <li class="list-group-item">Date Acquired: {{this.createdAt}}</li>
+            </ul>
+          </div>
+        {{/each}}
       </div>
+
       <br><br>
       <div class="container px-0">
         <div id="output">
+
         </div>
         <!-- <div>
           <table id="output2" class="table table-sm table-bordered"></table>

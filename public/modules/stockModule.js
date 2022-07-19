@@ -10,7 +10,7 @@ export function stockModule() {
   const stockCancelBtn = document.querySelector(".stockCancelBtn");
   const selectPartName = document.querySelector("select#partName");
   const selectBrandName = document.querySelector("select#brandName");
-  // console.log(selectPartName)
+
   if (selectPartName) {
     selectPartName.addEventListener("input", (e) => {
       // console.log(e.target.value);
@@ -23,7 +23,6 @@ export function stockModule() {
       fetch(`http://localhost:1000/api/parts?name=${e.target.value}`)
         .then(res => res.json())
         .then(data => {
-          // console.log(data)
           selectBrandName.disabled = false;
 
           let output = "";
@@ -49,7 +48,6 @@ export function stockModule() {
           fetch(url)
             .then(res => res.json())
             .then(data => {
-              // console.log(data)
               stockForm.action = `/stocks/${data._id}?_method=PUT`;
               partName.getElementsByTagName("option")[0].innerText = data.part.name;
               partName.getElementsByTagName("option")[0].value = data.part._id;

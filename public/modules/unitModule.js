@@ -1,94 +1,51 @@
 export function unitModule() {
-  const getUnits = document.querySelectorAll(".getUnit");
-  const deleteUnits = document.querySelectorAll(".deleteUnit");
+  // const getUnits = document.querySelectorAll(".getUnit");
+  const editUnits = document.querySelectorAll(".editUnit");
+  const plateNumber = document.querySelector("#plateNumber");
+  const unitForm = document.querySelector("#unitForm");
+  const unitEditBtn = document.querySelector(".unitEditBtn");
+  const unitCancelBtn = document.querySelector(".unitCancelBtn");
+  const deleteUnitForms = document.querySelectorAll(".deleteUnitForm");
 
-  // Delete Single Unit
-  // deleteUnits.forEach((deleteUnit) => {
-  //   deleteUnit.addEventListener('click', (e) => {
-  //     // console.log(e.target.dataset.id);
-  //     const id = e.target.getAttribute("data-id");
-  //     const url = `http://localhost:1000/api/units/${id}`;
-  //
-  //     try {
-  //       http.get(url)
-  //        .then(data => console.log(data));
-  //        window.location.href = '/units';
-  //     } catch (err) { console.log(err) }
-  //     e.preventDefault();
-  //   });
-  // });
-
-
-  // Display Single Unit Information from Unit and Dispatch Model
-  getUnits.forEach((getUnit) => {
-    getUnit.addEventListener("click", (e) => {
-      // console.log(e.target.dataset.url)
-      const url = e.target.dataset.url;
+  // Edit Single Unit
+  editUnits.forEach((editUnit) => {
+    editUnit.addEventListener("click", (e) => {
       try {
-        fetch(url)
-          .then(res => res.json())
-          .then(data => {
-            // console.log(data);
-            // <button class="btn btn-sm btn-primary editUnit"><i class="bi bi-pencil-fill"></i></button>
-            // <button class="btn btn-sm btn-danger deleteUnit"><i class="bi bi-trash-fill"></i></button>
-            let output = "";
-            output += `
-            <div class="d-flex justify-content-end gap-2">
-              <button class="badge bg-primary border-0 editUnit"><i class="bi bi-pencil-fill"></i></button>
-              <button class="badge bg-danger border-0 deleteUnit"><i class="bi bi-trash-fill"></i></button>
-            </div>
-            <h3>${data.plateNumber}</h3>
-            <br>
-            <ul class="list-group">
-            <li class="list-group-item">Date Acquired: ${data.createdAt}</li>
-            </ul>
-            <br>
-            `
-            document.getElementById("output").innerHTML = output;
-          });
-      } catch (err) { console.log(err.message) }
-      // const id = e.target.dataset.id;
-      // const unitNum = e.target.dataset.name;
-      // // console.log(id, unit)
-      // const unitUrl = `http://localhost:1000/api/units/${id}`;
-      // // const unitUrl = `http://localhost:1000/api/units?_id=${id}`;
-      // const dispatchUrl = `http://localhost:1000/api/dispatches?unit=${unitNum}`;
+        if (e.target.parentElement.classList.contains("editUnit")) {
+          const url = e.target.parentElement.dataset.url;
 
-      // try {
-      //   const unit = http.get(unitUrl);
-      //   const dispatch = http.get(dispatchUrl);
-      //   Promise.all([unit, dispatch])
-      //     .then(data => {
-      //       // console.log(data);
-      //       let output = "";
-      //
-      //       output += `
-      //       <h3>${data[0].name}</h3>
-      //       <br>
-      //       <ul class="list-group">
-      //       <li class="list-group-item">Date Acquired: ${data[0].createdAt}</li>
-      //       </ul>
-      //       <br>
-      //       `
-      //       document.getElementById("output").innerHTML = output;
-      //
-      //       let output2 = "";
-      //       data[1].forEach((data) => {
-      //         // console.log(data)
-      //         output2 += `
-      //         <tr>
-      //         <td>${data.createdAt}</td>
-      //         <td>${data.unit}</td>
-      //         <td>Change ${data.stock}</td>
-      //         <td>${data.quantity} pc</td>
-      //         <td>${data.stock.price} pesos</td>
-      //         </tr>
-      //         `
-      //         document.getElementById("output2").innerHTML = output2;
-      //       });
-      //     })
-      // } catch (err) { console.log(err.message) }
-      // e.preventDefault();
+          fetch(url)
+            .then(res => res.json())
+            .then(data => {
+              // console.log(data)
+              unitForm.action = `/units/${data._id}?_method=PUT`;
+              plateNumber.value = data.plateNumber;
+              unitEditBtn.value = "Edit";
+              unitCancelBtn.style.display = "block";
+            })
+        }
+      } catch (err) { console.log(err.message) }
     });
   });
+
+  // Edit Cancel Button
+  if (unitCancelBtn) {
+    unitCancelBtn.addEventListener("click", () => {
+      unitForm.action = "/units";
+      plateNumber.value = "";
+      unitEditBtn.value = "Submit";
+      unitCancelBtn.style.display = "none";
+    });
+  }
+
+  // Delete Single Unit
+  deleteUnitForms.forEach((deleteUnitForm) => {
+    deleteUnitForm.addEventListener("submit", (e) => {
+      if (!confirm("Are you sure you want to delete this unit?")) {
+        e.preventDefault();
+        return;
+      }
+    });
+  });
+
 }
