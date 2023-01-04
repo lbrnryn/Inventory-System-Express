@@ -38,16 +38,6 @@ export function unitModule() {
     });
   }
 
-  // Delete Single Unit
-  // deleteUnitForms.forEach((deleteUnitForm) => {
-  //   deleteUnitForm.addEventListener("submit", (e) => {
-  //     if (!confirm("Are you sure you want to delete this unit?")) {
-  //       e.preventDefault();
-  //       return;
-  //     }
-  //   });
-  // });
-
   deleteUnitBtns.forEach(deleteUnitBtn => {
     deleteUnitBtn.addEventListener("click", async (e) => {
       if (confirm("Are you sure you want to delete this unit?")) {
@@ -56,7 +46,7 @@ export function unitModule() {
         deleteBtn.parentElement.parentElement.remove();
         const id = deleteBtn.dataset.id;
         // console.log(id)
-        await fetch(`http://localhost:2000/api/units/${id}`, {
+        await fetch(`http://localhost:2000/units/api/${id}`, {
           method: "DELETE"
         });
       }

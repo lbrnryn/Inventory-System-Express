@@ -47,7 +47,7 @@ export const brandModule = () => {
         submitEditBrandBtn.value = "Submit";
         cancelEditBrandBtn.style.display = "none";
         const id = deleteBtn.dataset.id;
-        await fetch(`http://localhost:2000/api/brands/${id}`, {
+        await fetch(`http://localhost:2000/brands/api/${id}`, {
           method: "DELETE"
         });
       }

@@ -1,35 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="#">InvSys</a>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/brands">Brands</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/parts">Parts</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/stocks">Stocks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/units">Units</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/dispatches">Dispatches</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+{{> navbar }}
+
 <br>
-<div class="container-fluid">
+
+<div class="container">
   <div class="row border">
     <div class="col-sm-3 border-end">
       <form id="unitForm" class="p-2" action="/units" method="post">

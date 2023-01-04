@@ -48,10 +48,10 @@ app.use('/units', require('./routes/unit'));
 app.use('/dispatches', require('./routes/dispatch'));
 
 // Api Routes
-app.use('/api/brands', require('./routes/api/brand'));
+// app.use('/api/brands', require('./routes/api/brand'));
 app.use('/api/parts', require('./routes/api/part'));
 app.use('/api/stocks', require('./routes/api/stock'));
-app.use('/api/units', require('./routes/api/unit'));
+// app.use('/api/units', require('./routes/api/unit'));
 app.use('/api/dispatches', require('./routes/api/dispatch'));
 
 const port = process.env.PORT || 2000;
