@@ -1,4 +1,4 @@
-.brandCancelBtn,.partCancelBtn, .stockCancelBtn, .unitCancelBtn, .hiddenBtn {
+#cancelEditBrandBtn,.partCancelBtn, .stockCancelBtn, #cancelEditUnitBtn, .hiddenBtn {
   display: none;
 }
 

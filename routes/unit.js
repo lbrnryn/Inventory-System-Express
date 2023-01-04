@@ -10,7 +10,6 @@ router.get('/', async (req, res, next) => {
     const units = await Unit.find();
     units.forEach(unit => unit.url = `http://localhost:${process.env.PORT}/api/units/${unit._id}`);
     const dispatches = await Dispatch.find();
-    console.log(dispatches)
     res.render('units', { units });
   } catch (err) { console.log(err.message) }
 });
@@ -33,11 +32,11 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // Delete a unit - DELETE /units/:id
-router.delete('/:id', async (req, res, next) => {
-  try {
-    await Unit.findByIdAndDelete({ _id: req.params.id });
-    res.redirect('/units');
-  } catch (err) { console.log(err.message) }
-});
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//     await Unit.findByIdAndDelete({ _id: req.params.id });
+//     res.redirect('/units');
+//   } catch (err) { console.log(err.message) }
+// });
 
 module.exports = router;

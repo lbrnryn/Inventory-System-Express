@@ -28,18 +28,22 @@
     </div>
   </div>
 </nav>
+
 <br>
-<div class="container-fluid">
+
+<div class="container">
   <div class="row border">
     <div class="col-sm-3 border-end">
-      <form id="brandForm" class="p-2" action="/brands" method="post">
-        <div class="row mb-2">
+      <form id="brandForm" class="p-2 d-grid gap-2" action="/brands" method="post">
+        <input type="text" class="form-control form-control-sm" name="brandname" id="brandName" placeholder="Brandname..." required>
+        <input class="btn btn-primary btn-sm" id="submitEditBrandBtn" type="submit" value="Submit">
+        <input type="button" class="btn btn-secondary btn-sm" id="cancelEditBrandBtn" value="Cancel">
+        {{!-- <div class="row mb-2">
           <input type="text" class="form-control form-control-sm" name="brandname" id="brandName" placeholder="Brandname..." required>
         </div>
         <div class="row">
-          <input class="btn btn-primary btn-sm brandEditBtn" type="submit" value="Submit">
-          <input type="button" class="btn btn-secondary btn-sm brandCancelBtn" value="Cancel">
-        </div>
+          
+        </div> --}}
       </form>
     </div>
     <div class="col p-2">
@@ -51,10 +55,11 @@
           <div class="d-flex align-items-center">
             <!-- <a href="#" class="editBrand link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
             <!-- <button type="button" class="btn btn-sm btn-primary editBrand" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button> -->
-            <button type="button" class="badge bg-primary border-0 editBrand" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
-            <form action="/brands/{{this._id}}?_method=DELETE" class="deleteBrandForm" method="post">
+            <button type="button" class="badge bg-primary border-0" id="editBrandBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+            <button type="button" class="badge bg-danger border-0" id="deleteBrandBtn" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></button>
+            {{!-- <form action="/brands/{{this._id}}?_method=DELETE" class="deleteBrandForm" method="post">
               <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash-fill"></i></button>
-            </form>
+            </form> --}}
           </div>
         </li>
         {{/each}}

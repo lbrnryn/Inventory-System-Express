@@ -34,11 +34,12 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // Delete a brand - DELETE /brands/:id
-router.delete('/:id', async (req, res, next) => {
-  try {
-    await Brand.findByIdAndDelete({ _id: req.params.id });
-    res.redirect('/brands');
-  } catch (err) { console.log(err.message) }
-});
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//     // console.log(`Delete: ${req.params.id}`)
+//     await Brand.findByIdAndDelete({ _id: req.params.id });
+//     // res.redirect('/brands');
+//   } catch (err) { console.log(err.message) }
+// });
 
 module.exports = router;

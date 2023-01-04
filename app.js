@@ -14,7 +14,7 @@ const Dispatch = require('./models/dispatch');
 
 // Put this mongoose connection to other folder
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/inventory');
+  await mongoose.connect('mongodb://127.0.0.1:27017/inventory');
   console.log('Database Connected!');
 }
 main().catch(err => console.log(err));
@@ -54,7 +54,7 @@ app.use('/api/stocks', require('./routes/api/stock'));
 app.use('/api/units', require('./routes/api/unit'));
 app.use('/api/dispatches', require('./routes/api/dispatch'));
 
-const port = process.env.PORT || 1000;
+const port = process.env.PORT || 2000;
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

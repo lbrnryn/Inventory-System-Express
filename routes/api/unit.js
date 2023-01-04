@@ -17,10 +17,17 @@ router.get('/:id', async (req, res, next) => {
   } catch (err) { console.log(err.message) }
 });
 
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//     const unit = await Unit.findById(req.params.id);
+//     res.json(unit);
+//   } catch (err) { console.log(err.message) }
+// });
+
+// /api/units/:id
 router.delete('/:id', async (req, res, next) => {
   try {
-    const unit = await Unit.findById(req.params.id);
-    res.json(unit);
+    await Unit.findByIdAndDelete({ _id: req.params.id });
   } catch (err) { console.log(err.message) }
 });
 

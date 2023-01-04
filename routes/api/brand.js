@@ -10,11 +10,18 @@ router.get('/', async (req, res, next) => {
   } catch (err) { console.log(err.message) }
 });
 
-// Get Single Brand
+// Get Single Brand - /api/brands
 router.get('/:id', async (req, res, next) => {
   try {
     const result = await Brand.findById({ _id: req.params.id });
     res.json(result);
+  } catch (err) { console.log(err.message) }
+});
+
+// Delete a brand - DELETE /api/brands/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Brand.findByIdAndDelete({ _id: req.params.id });
   } catch (err) { console.log(err.message) }
 });
 
