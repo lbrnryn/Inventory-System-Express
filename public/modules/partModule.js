@@ -1,13 +1,13 @@
 export const partModule = () => {
   const getParts = document.querySelectorAll(".getPart"); // Get Part Records
 
-  const editParts = document.querySelectorAll(".editPart");
-  const deletePartForms = document.querySelectorAll(".deletePartForm");
-  const partName = document.querySelector("#partName");
-  const brandName = document.querySelector("#brandName");
   const partForm = document.querySelector("#partForm");
-  const partEditBtn = document.querySelector(".partEditBtn");
-  const partCancelBtn = document.querySelector(".partCancelBtn");
+  const partName = document.querySelector("#partName");
+  const part_brandName = document.querySelector("#part_brandName");
+  const submitEditPartBtn = document.querySelector("#submitEditPartBtn");
+  const cancelEditPartBtn = document.querySelector("#cancelEditPartBtn");
+  const editPartBtns = document.querySelectorAll(".editPartBtn");
+  const deletePartForms = document.querySelectorAll(".deletePartForm");
 
   // // Get Each Part Records in Dispatch
   // getParts.forEach((getPart) => {
@@ -39,36 +39,34 @@ export const partModule = () => {
   // });
 
   // Edit Single Part
-  editParts.forEach((editPart) => {
-    editPart.addEventListener("click", (e) => {
+  editPartBtns.forEach((editPartBtn) => {
+    editPartBtn.addEventListener("click", (e) => {
       try {
-        if (e.target.parentElement.classList.contains("editPart")) {
-          const url = e.target.parentElement.dataset.url;
-
-          fetch(url)
-            .then(res => res.json())
-            .then(data => {
-              partForm.action = `/parts/${data._id}?_method=PUT`;
-              partName.value = data.name;
-              brandName.getElementsByTagName("option")[0].innerText = data.brand.name;
-              brandName.getElementsByTagName("option")[0].value = data.brand._id;
-              partEditBtn.value = "Edit";
-              partCancelBtn.style.display = "block";
-            })
-        }
+        const editBtn = e.target.tagName === "I" ? e.target.parentElement: e.target;
+        const url = editBtn.dataset.url;
+        fetch(url)
+          .then(res => res.json())
+          .then(data => {
+            partForm.action = `/parts/${data._id}?_method=PUT`;
+            partName.value = data.name;
+            part_brandName.getElementsByTagName("option")[0].innerText = data.brand.name;
+            part_brandName.getElementsByTagName("option")[0].value = data.brand._id;
+            submitEditPartBtn.innerText = "Edit";
+            cancelEditPartBtn.style.display = "block";
+          });
       } catch (err) { console.log(err.message) }
     });
   });
 
   // Edit Cancel Button
-  if (partCancelBtn) {
-    partCancelBtn.addEventListener("click", () => {
+  if (cancelEditPartBtn) {
+    cancelEditPartBtn.addEventListener("click", () => {
       partForm.action = "/parts";
       partName.value = "";
-      brandName.getElementsByTagName("option")[0].innerText = "Select brand";
-      brandName.getElementsByTagName("option")[0].value = "";
-      partEditBtn.value = "Submit";
-      partCancelBtn.style.display = "none";
+      part_brandName.getElementsByTagName("option")[0].innerText = "Select brand";
+      part_brandName.getElementsByTagName("option")[0].value = "";
+      submitEditPartBtn.innerText = "Submit";
+      cancelEditPartBtn.style.display = "none";
     })
   }
 

@@ -3,20 +3,53 @@
 <br>
 
 <div class="container">
-  <div class="row border">
-    <div class="col-sm-3 border-end">
+  <div class="row g-5">
+
+    <div class="col-md-6">
+      <form id="brandForm" class="d-grid gap-2" action="/brands" method="post">
+        <input type="text" class="form-control form-control-sm bg-transparent text-white" name="brandname" id="brandName" placeholder="Brandname..." required>
+        <div class="d-flex gap-2">
+          <input class="btn btn-primary btn-sm bg-gradient" id="submitEditBrandBtn" type="submit" value="Submit">
+          <input type="button" class="btn btn-secondary btn-sm" id="cancelEditBrandBtn" value="Cancel">
+        </div>
+      </form>
+      <span class="badge bg-secondary bg-gradient my-2">Brands Count: {{brands.length}}</span>
+      <ul class="list-group">
+        {{#each brands}}
+        <li class="list-group-item d-flex justify-content-between text-capitalize">{{this.name}}
+          <div class="d-flex align-items-center">
+            <button type="button" class="badge bg-primary bg-gradient border-0" id="editBrandBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+            <button type="button" class="badge bg-danger bg-gradient border-0" id="deleteBrandBtn" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></button>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="col-md-6">
+      <form id="partForm" class="d-grid gap-2" action="/parts" method="POST">
+          <input type="text" id="partName" class="form-control form-control-sm bg-transparent text-white" name="partname" placeholder="Partname" required>
+          <select id="brandName" class="form-select form-select-sm bg-transparent text-white" name="brandname" required>
+            <option value="">Select brand</option>
+            {{#each brands}}
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        <div class="d-flex gap-2">
+          <input class="btn btn-sm btn-primary partEditBtn" type="submit" value="Submit">
+          <button type="button" class="btn btn-secondary btn-sm partCancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    {{!-- <div class="col-md-5 border-end">
       <form id="brandForm" class="p-2 d-grid gap-2" action="/brands" method="post">
         <input type="text" class="form-control form-control-sm" name="brandname" id="brandName" placeholder="Brandname..." required>
         <input class="btn btn-primary btn-sm bg-gradient" id="submitEditBrandBtn" type="submit" value="Submit">
         <input type="button" class="btn btn-secondary btn-sm" id="cancelEditBrandBtn" value="Cancel">
-        {{!-- <div class="row mb-2">
-          <input type="text" class="form-control form-control-sm" name="brandname" id="brandName" placeholder="Brandname..." required>
-        </div>
-        <div class="row">
-          
-        </div> --}}
       </form>
     </div>
+
     <div class="col p-2">
       <span class="badge bg-secondary bg-gradient">Brands Count: {{brands.length}}</span>
       <br><br>
@@ -24,17 +57,88 @@
         {{#each brands}}
         <li class="list-group-item list-group-item-dark d-flex justify-content-between text-capitalize">{{this.name}}
           <div class="d-flex align-items-center">
-            <!-- <a href="#" class="editBrand link-secondary" data-id="{{this._id}}"><i class="bi bi-pencil-fill"></i></a> -->
-            <!-- <button type="button" class="btn btn-sm btn-primary editBrand" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button> -->
             <button type="button" class="badge bg-primary bg-gradient border-0" id="editBrandBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
             <button type="button" class="badge bg-danger bg-gradient border-0" id="deleteBrandBtn" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></button>
-            {{!-- <form action="/brands/{{this._id}}?_method=DELETE" class="deleteBrandForm" method="post">
-              <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash-fill"></i></button>
-            </form> --}}
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div> --}}
+
+    <div class="col-md-6">
+      <form id="stockForm" class="d-grid gap-2" action="/stocks" method="post">
+        <select id="partName" class="form-select form-select-sm bg-transparent text-white" name="partname" required>
+          <option value="">Choose a part...</option>
+          {{#each parts}}
+            <option value="{{this.name}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+        <select id="brandName" class="form-select form-select-sm bg-transparent text-white" name="brandname" required disabled>
+          <!-- <option value="">Choose a brand...</option> -->
+          <!-- {{#each brands}}
+            <option value="{{this.name}}">{{this.name}}</option>
+          {{/each}} -->
+        </select>
+        <input type="number" id="quantity" class="form-control form-control-sm bg-transparent text-white" name="quantity" placeholder="Qty." required>
+        <input type="number" id="price" class="form-control form-control-sm bg-transparent text-white" name="price" placeholder="Price" required>
+        <!-- <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button> -->
+        <div class="d-flex gap-2">
+          <input class="btn btn-sm btn-primary stockEditBtn" type="submit" value="Submit">
+          <button type="button" class="btn btn-secondary btn-sm stockCancelBtn">Cancel</button>
+        </div>
+        <!-- <div class="row d-none">
+          <div class="d-flex justify-content-around px-0">
+            <a href="#" class="editStock btn btn-secondary btn-sm d-inline w-25" data-id="{{this._id}}">Edit</a>
+            <a href="#" class="deleteStock btn btn-danger btn-sm d-inline w-25" data-id="{{this._id}}">Delete</a>
+          </div>
+        </div> -->
+      </form>
+      <span class="badge bg-secondary bg-gradient my-2">Brands Count: {{brands.length}}</span>
+      <ul class="list-group">
+        {{#each brands}}
+        <li class="list-group-item d-flex justify-content-between text-capitalize">{{this.name}}
+          <div class="d-flex align-items-center">
+            <button type="button" class="badge bg-primary bg-gradient border-0" id="editBrandBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+            <button type="button" class="badge bg-danger bg-gradient border-0" id="deleteBrandBtn" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></button>
           </div>
         </li>
         {{/each}}
       </ul>
     </div>
+
+    <div class="col-md-6">
+      <form id="editDispatchForm" class="d-grid gap-2" action="/dispatches" method="post">
+        <select id="plateNumber" class="form-select form-select-sm bg-transparent text-white" name="plateNumber" required>
+          <option value="">Choose a unit...</option>
+          {{#each units}}
+            <option class="text-uppercase" value="{{this.plateNumber}}">{{this.plateNumber}}</option>
+          {{/each}}
+        </select>
+        <select id="stock" class="form-select form-select-sm bg-transparent text-white" name="stock" required>
+          <option value="">Choose a stock...</option>
+          {{#each stocks}}
+            <option value="{{this._id}}">{{this.part.name}} ({{this.part.brand}})</option>
+          {{/each}}
+        </select>
+        <!-- <div class="row mb-2">
+          <input type="number" id="quantity" class="form-control form-control-sm" name="quantity" placeholder="Qty." required>
+        </div> -->
+        <div class="d-flex gap-2">
+          <button id="submitBtn" type="submit" class="btn btn-primary btn-sm">Submit</button>
+        </div>
+      </form>
+      <span class="badge bg-secondary bg-gradient my-2">Brands Count: {{brands.length}}</span>
+      <ul class="list-group">
+        {{#each brands}}
+        <li class="list-group-item d-flex justify-content-between text-capitalize">{{this.name}}
+          <div class="d-flex align-items-center">
+            <button type="button" class="badge bg-primary bg-gradient border-0" id="editBrandBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill"></i></button>
+            <button type="button" class="badge bg-danger bg-gradient border-0" id="deleteBrandBtn" data-id="{{this._id}}"><i class="bi bi-trash-fill"></i></button>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
   </div>
 </div>
