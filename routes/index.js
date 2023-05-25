@@ -21,30 +21,6 @@ router.get('/', async (req, res, next) => {
     } catch (err) { next(err) }
 });
 
-// POST - /brands - Add a brand
-router.post('/brands', async (req, res, next) => {
-    try {
-        await Brand.create({ name: req.body.brandname });
-        res.redirect('/');
-    } catch (err) { next(err) }
-});
-
-// PUT - /brands/:id - Edit a brand
-router.put('/brands/:id', async (req, res, next) => {
-    try {
-        await Brand.findByIdAndUpdate({ _id: req.params.id }, { name: req.body.brandname });
-        res.redirect('/');
-    } catch (err) { next(err) }
-});
-
-// DELETE - /brands/:id
-router.delete('/brands/:id', async (req, res, next) => {
-    try {
-    await Brand.findByIdAndDelete({ _id: req.params.id });
-    res.redirect('/');
-    } catch (err) { next(err) }
-});
-
 // POST - /parts - Add Single Part 
 router.post('/parts', async (req, res, next) => {
     try {

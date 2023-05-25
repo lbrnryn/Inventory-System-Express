@@ -4,8 +4,8 @@ import { stockModule } from './modules/stockModule.js'
 import { unitModule } from './modules/unitModule.js'
 import { dispatchModule } from './modules/dispatchModule.js'
 
-// brandModule();
-// partModule();
-// stockModule();
-// unitModule();
-// dispatchModule();
+brandModule();
+partModule();
+stockModule();
+unitModule();
+dispatchModule();
