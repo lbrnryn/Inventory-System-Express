@@ -25,7 +25,7 @@ router.post('/', async (req, res, next) => {
     await Stock.findByIdAndUpdate({ _id: stock }, {
       $inc: { quantity: -1 }
     });
-    res.redirect('/dispatches');
+    res.redirect('/');
   } catch (err) { console.log(err.message) }
 });
 

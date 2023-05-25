@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
   try {
     const { plateNumber } = req.body;
     await Unit.create({ plateNumber });
-    res.redirect('/units');
+    res.redirect('/');
   } catch (err) { console.log(err.message) }
 });
 
@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     await Unit.findByIdAndUpdate({ _id: req.params.id }, { plateNumber: req.body.plateNumber });
-    res.redirect('/units');
+    res.redirect('/');
   } catch (err) { console.log(err.message) }
 });
 

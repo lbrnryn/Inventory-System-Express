@@ -27,7 +27,7 @@ router.put('/:id', async (req, res, next) => {
   }
   Dispatch.findByIdAndUpdate({ _id: req.params.id }, dispatch, (err, dispatch) => {
     if (err) { console.log(err.message) }
-    res.redirect('/dispatches');
+    res.redirect('/');
   })
 });
 

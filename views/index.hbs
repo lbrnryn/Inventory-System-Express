@@ -1,0 +1,229 @@
+<div class='container mx-auto mt-5 p-5'>
+  <div class='grid grid-cols-2 gap-5'>
+
+    <div class='grid gap-5'>
+      <form id='brandForm' class='text-white grid gap-3' action='/brands' method='post'>
+        <input type='text' class='text-sm px-1 bg-transparent border-b w-80 outline-0' name='brandname' id='brandName' placeholder='Brandname...' required>
+        <div class='flex justify-between'>
+          <div class='text-xs font-bold flex gap-2'>
+            <button type='submit' class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg' id='submitEditBrandBtn'>Submit</button>
+            <button type='button' class='bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded-lg' id='cancelEditBrandBtn'>Cancel</button>
+          </div>
+          <span>{{brands.length}}</span>
+        </div>
+      </form>
+      
+      <ul class='text-white text-sm'>
+        {{#each brands}}
+        <li class='flex justify-between'>{{this.name}}
+          <div class='flex items-center gap-1'>
+            {{!-- <button type='button' class='editBrandBtn' data-url='/api/brands/{{this._id}}'><i class='bi bi-pencil-fill'></i></button> --}}
+            <button type='button' class='editBrandBtn' data-url='/api/brands/{{this._id}}'>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-600">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+            </button>
+            <form action='/brands/{{this._id}}?_method=DELETE' class='flex items-center deleteBrandForm' method='post'>
+              {{!-- <button type='submit' class=''><i class='bi bi-trash-fill'></i></button> --}}
+              <button type='submit'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+
+    <div class='grid gap-5'>
+      <form id='partForm' class='grid gap-3' action='/parts' method='POST'>
+        <div class="grid grid-cols-2 gap-5 text-sm">
+          <input type='text' id='partName' class='text-white px-1 bg-transparent border-b w-auto outline-0' name='partname' placeholder='Partname' required>
+          <select id='part_brandName' class='' name='brandname' required>
+            <option value=''>Select brand</option>
+            {{#each brands}}
+              <option value='{{this._id}}' class=''>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class='text-white flex justify-between items-center'>
+          <div class='text-xs font-bold flex gap-2'>
+            <button type='submit' class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg' id='submitEditPartBtn'>Submit</button>
+            <button type='button' class='bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded-lg' id='cancelEditPartBtn'>Cancel</button>
+          </div>
+          <span>{{parts.length}}</span>
+        </div>
+      </form>
+
+      <ul class='text-white text-sm'>
+        {{#each parts}}
+        <li class='flex justify-between capitalize'>{{this.name}}
+          <div class='flex items-center gap-1'>
+            {{!-- <button type='button' class='editPartBtn' data-url='/api/parts/{{this._id}}'><i class='bi bi-pencil-fill'></i></button> --}}
+            <button type='button' class='editPartBtn' data-url='/api/parts/{{this._id}}'>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-600">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+            </button>
+            <form action='/parts/{{this._id}}?_method=DELETE' class='flex items-center deletePartForm' method='post'>
+              {{!-- <button type='submit' class=''><i class='bi bi-trash-fill'></i></button> --}}
+              <button type='submit'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class='grid gap-5'>
+      <form id='stockForm' class='grid gap-3' action='/stocks' method='post'>
+        <div class='grid grid-cols-2 gap-5 text-sm'>
+          <select id='stock_partName' class='' name='partname' required>
+            <option value=''>Choose a part...</option>
+            {{#each uniquePartNames}}
+              <option value='{{this}}'>{{this}}</option>
+            {{/each}}
+          </select>
+          <input type='number' id='quantity' class='text-white px-1 bg-transparent border-b w-auto outline-0' name='quantity' placeholder='Qty.' required>
+        </div>
+        <div class='grid grid-cols-2 gap-5 text-sm'>
+          <select id='stock_brandName' class='' name='brandname'>
+            <option value=''>Choose a brand...</option>
+          </select>
+          <input type='number' id='price' class='text-white px-1 bg-transparent border-b w-auto outline-0' name='price' placeholder='Price' required>
+        </div>
+        <div class='text-white flex justify-between items-center'>
+          <div class='text-xs font-bold flex gap-2'>
+            <button type='submit' class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg' id='submitEditStockBtn'>Submit</button>
+            <button type='button' class='bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded-lg' id='cancelEditStockBtn'>Cancel</button>
+          </div>
+          <span>{{stocks.length}}</span>
+        </div>
+      </form>
+      
+      {{#if stocks}}
+        <table class="border-separate border text-white text-sm">
+          <thead>
+            <tr>
+              <th class="border">Item</th>
+              <th class="border">Brand</th>
+              <th class="border w-12">Qty</th>
+              <th class="border w-16">Price</th>
+              <th class='border w-16'>Action</th>
+            </tr>
+          </thead>
+          {{#each stocks}}
+            <tr>
+              <td class='border capitalize'>{{this.part.name}}</td>
+              <td class='border'>{{this.part.brand}}</td>
+              <td class='border text-center'>{{this.quantity}}</td>
+              <td class='border text-center'>{{this.price}}</td>
+              <td class='border'>
+                <div class="flex justify-around">
+                  {{!-- <button type='button' class='editStockBtn' data-url='/api/stocks/{{this._id}}'><i class='bi bi-pencil-fill'></i></button> --}}
+                  <button type='button' class='editStockBtn' data-url='/api/stocks/{{this._id}}'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-600">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
+                  </button>
+                  <form action='/stocks/{{this._id}}?_method=DELETE' class='flex items-center deleteStockForm' method='post'>
+                    {{!-- <button type='submit' class=''><i class='bi bi-trash-fill'></i></button> --}}
+                    <button type='submit' class=''>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{/if}}
+    </div>
+
+    <div class='grid gap-5'>
+      <form id='editDispatchForm' class='grid gap-3' action='/dispatches' method='post'>
+        <div class="grid grid-cols-2 gap-5 text-sm">
+          <select id='plateNumber' class='' name='plateNumber'>
+            <option value=''>Choose a unit...</option>
+            {{#each units}}
+              <option class='' value='{{this.plateNumber}}'>{{this.plateNumber}}</option>
+            {{/each}}
+          </select>
+          <select id='stock' class='' name='stock' required>
+            <option value=''>Choose a stock...</option>
+            {{#each stocks}}
+              <option value='{{this._id}}'>{{this.part.name}} ({{this.part.brand}})</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class='text-white flex justify-between items-center'>
+          <div class='text-xs font-bold'>
+            <button class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg' id='submitBtn'>Submit</button>
+          </div>
+          <span>{{dispatches.length}}</span>
+        </div>
+      </form>
+      <input type='text' class='text-white px-1 bg-transparent border-b w-auto outline-0' placeholder='Search records'>
+      {{#if dispatches}}
+        <table class='border-separate border text-white text-sm'>
+          <thead>
+            <tr>
+              <th class="border">Unit</th>
+              <th class="border">Item</th>
+              <th class="border">Brand</th>
+              <th class="border">Qty</th>
+              <th class="border">Price</th>
+              <th class="border w-16">Action</th>
+            </tr>
+          </thead>
+          {{#each dispatches}}
+            <tr>
+              <td>{{this.plateNumber}}</td>
+              <td class="capitalize">{{this.stock.part.name}}</td>
+              <td>{{this.stock.part.brand}}</td>
+              <td>{{this.stock.quantity}}pc</td>
+              <td>{{this.stock.price}}</td>
+              <td class="flex justify-around">
+                {{!-- <a href='#' class='editDispatch' data-id='{{this._id}}'><i class='bi bi-pencil-fill'></i></a> --}}
+                <a href='#' class='editDispatch' data-id='{{this._id}}'>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                  </svg>
+                </a>
+                {{!-- <a href='#' class='deleteDispatch' data-id='{{this._id}}'><i class='bi bi-trash-fill'></i></a> --}}
+                <a href='#' class='deleteDispatch' data-id='{{this._id}}'>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{/if}}
+    </div>
+
+    <div class='grid gap-5'>
+      <form id='unitForm' class='text-white grid gap-3' action='/units' method='post'>
+        <input type='text' class='text-sm px-1 bg-transparent border-b w-80 outline-0' name='plateNumber' id='plateNumber' placeholder='Unit Ex. ABC123/1234' pattern='[A-Za-z]{3}[0-9]{3,4}' required>
+        <div class='flex justify-between'>
+          <div class='text-xs font-bold flex gap-2'>
+            <button type='submit' class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg'>Submit</button>
+            <button type='button' class='bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded-lg' id='cancelEditUnitBtn'>Cancel</button>
+          </div>
+          <span>{{units.length}}</span>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

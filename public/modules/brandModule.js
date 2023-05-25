@@ -9,20 +9,28 @@ export const brandModule = () => {
 
   // Edit Single Brand
   editBrandBtns.forEach(editBrandBtn => {
-    editBrandBtn.addEventListener("click", (e) => {
+    editBrandBtn.addEventListener("click", async (e) => {
       try {
         const editBtn = e.target.tagName === "I" ? e.target.parentElement: e.target;
         // console.log(editBtn)
         const url = editBtn.dataset.url;
-        fetch(url)
-          .then(res => res.json())
-          .then(data => {
-            // console.log(data)
-            brandForm.action = `/brands/${data._id}?_method=PUT`;
-            brandName.value = data.name;
-            submitEditBrandBtn.innerText = "Edit";
-            cancelEditBrandBtn.style.display = "block";
-          });
+        // fetch(url)
+        //   .then(res => res.json())
+        //   .then(data => {
+        //     // console.log(data)
+        //     brandForm.action = `/brands/${data._id}?_method=PUT`;
+        //     brandName.value = data.name;
+        //     submitEditBrandBtn.innerText = "Edit";
+        //     cancelEditBrandBtn.style.display = "block";
+        //   });
+        const res = await fetch(url);
+        const data = await res.json();
+        // console.log(data)
+        brandForm.action = `/brands/${data._id}?_method=PUT`;
+        brandName.value = data.name;
+        submitEditBrandBtn.innerText = "Edit";
+        cancelEditBrandBtn.style.display = "block";
+
       } catch (err) { console.log(err.message) }
     })
   });

@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const Brand = require('../models/brand');
 const Part = require('../models/part');
 const Unit = require('../models/unit');
@@ -9,23 +9,16 @@ const Dispatch = require('../models/dispatch');
 router.get('/', async (req, res, next) => {
     try {
         const brands = await Brand.find().lean();
-        brands.forEach(brand => brand.url = `http://localhost:${process.env.PORT}/api/brands/${brand._id}`);
-        
         const parts = await Part.find().lean();
-        parts.forEach(part => part.url = `http://localhost:${process.env.PORT}/api/parts/${part._id}`);
 
         const uniquePartNames = [...new Set(parts.map(part => part.name))];
-
-
+        
         const stocks = await Stock.find().lean();
-        stocks.forEach(stock => stock.url = `http://localhost:${process.env.PORT}/api/stocks/${stock._id}`);
-
         const units = await Unit.find().lean();
+        const dispatches = await Dispatch.find().populate('stock').lean();
 
-        const dispatches = await Dispatch.find().lean();
-
-        res.render("home", { brands, parts, uniquePartNames, stocks, units, dispatches })
-    } catch (err) { console.log(err) }
+        res.render('index', { brands, parts, uniquePartNames, stocks, units, dispatches })
+    } catch (err) { next(err) }
 });
 
 // POST - /brands - Add a brand
@@ -33,7 +26,7 @@ router.post('/brands', async (req, res, next) => {
     try {
         await Brand.create({ name: req.body.brandname });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // PUT - /brands/:id - Edit a brand
@@ -41,7 +34,7 @@ router.put('/brands/:id', async (req, res, next) => {
     try {
         await Brand.findByIdAndUpdate({ _id: req.params.id }, { name: req.body.brandname });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // DELETE - /brands/:id
@@ -49,7 +42,7 @@ router.delete('/brands/:id', async (req, res, next) => {
     try {
     await Brand.findByIdAndDelete({ _id: req.params.id });
     res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // POST - /parts - Add Single Part 
@@ -63,7 +56,7 @@ router.post('/parts', async (req, res, next) => {
     //   }
         await Part.create({ name: req.body.partname, brand: req.body.brandname });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // PUT - /parts/:id - Edit a part
@@ -71,7 +64,7 @@ router.put('/parts/:id', async (req, res, next) => {
     try {
         await Part.findByIdAndUpdate({ _id: req.params.id }, { name: req.body.partname, brand: req.body.brandname });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // DELETE - /parts/:id - Delete a brand
@@ -79,7 +72,7 @@ router.delete('/parts/:id', async (req, res, next) => {
     try {
         await Part.findByIdAndDelete({ _id: req.params.id });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // POST - /stocks - Add a stock
@@ -93,7 +86,7 @@ router.post('/stocks', async (req, res, next) => {
         price: price
         });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // PUT - /stocks/:id - Edit a stock
@@ -110,7 +103,7 @@ router.put('/stocks/:id', async (req, res, next) => {
         };
         await Stock.findByIdAndUpdate({ _id: req.params.id }, stock);
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
 
 // DELETE - /stocks/:id - Delete a stock
@@ -118,7 +111,7 @@ router.delete('/stocks/:id', async (req, res, next) => {
     try {
         await Stock.findByIdAndDelete({ _id: req.params.id });
         res.redirect('/');
-    } catch (err) { console.log(err.message) }
+    } catch (err) { next(err) }
 });
   
 

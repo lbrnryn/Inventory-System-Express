@@ -1,7 +1,6 @@
 const express = require('express');
-const { engine } = require('express-handlebars');
-const bodyParser = require('body-parser');
 const path = require('path');
+const { engine } = require('express-handlebars');
 const methodOverride = require('method-override');
 require('dotenv').config();
 const mongoose = require('mongoose');
@@ -10,7 +9,7 @@ const mongoose = require('mongoose');
   try {
     await mongoose.connect('mongodb://127.0.0.1:27017/inventory');
     console.log('Database Connected!');
-  } catch (err) { console.log(err) };
+  } catch (err) { next(err) };
 })()
 
 const app = express();
@@ -26,7 +25,7 @@ app.set('views', './views');
 app.set('json spaces', 2);
 
 // Views Routes
-app.use("/", require("./routes/home"));
+app.use("/", require("./routes/index"));
 app.use('/units', require('./routes/unit'));
 app.use('/dispatches', require('./routes/dispatch'));
 
@@ -37,5 +36,13 @@ app.use('/api/stocks', require('./routes/api/stock'));
 // app.use('/api/units', require('./routes/api/unit'));
 app.use('/api/dispatches', require('./routes/api/dispatch'));
 
+app.get('/pagenotfound', (req, res) => res.render('pagenotfound'));
+
+app.use((req, res) => { res.redirect('/pagenotfound') });
+
+app.use((err, req, res, next) => {
+  console.log('Error handling middleware', err);
+});
+
 const port = process.env.PORT || 2000
-app.listen(port, () => { console.log(`Listening on port ${port}`) });
+app.listen(port, () => console.log(`Listening on port ${port}`));
