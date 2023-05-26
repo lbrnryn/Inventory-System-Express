@@ -5,21 +5,17 @@ export const brandModule = () => {
   let brandToEdit;
   const cancelEditBrandBtn = document.querySelector('#cancelEditBrandBtn');
 
-  const submitEditBrandBtn = document.querySelector("#submitEditBrandBtn");
-  const editBrandBtns = document.querySelectorAll(".editBrandBtn");
-  const deleteBrandForms = document.querySelectorAll(".deleteBrandForm");
-
   brandForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const { brandName, cancelEditBrandBtn } = e.target.elements;
+    const { name, cancelEditBrandBtn } = e.target.elements;
 
     if (brandToEdit) {
 
       const res = await fetch(`/api/brands/${brandToEdit._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: brandName.value })
+        body: JSON.stringify({ name: name.value })
       });
       const data = await res.json();
 
@@ -41,7 +37,7 @@ export const brandModule = () => {
       `;
 
       brandToEdit = undefined;
-      brandName.value = '';
+      name.value = '';
       cancelEditBrandBtn.classList.add('hidden');
 
     } else {
@@ -49,7 +45,7 @@ export const brandModule = () => {
       const res = await fetch('/api/brands', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: brandName.value })
+        body: JSON.stringify({ name: name.value })
       });
       const data = await res.json();
   
@@ -72,7 +68,7 @@ export const brandModule = () => {
         </div>
       `;
       brandList.appendChild(li);
-      brandName.value = '';
+      name.value = '';
 
     }
 
@@ -82,7 +78,7 @@ export const brandModule = () => {
     try {
 
       if (e.target.closest('.editBrandBtn') !== null) {
-        const { brandName, cancelEditBrandBtn } = brandForm.elements;
+        const { name, cancelEditBrandBtn } = brandForm.elements;
 
         const editBrandBtn = e.target.closest('.editBrandBtn');
         const id = editBrandBtn.dataset.id;
@@ -91,7 +87,7 @@ export const brandModule = () => {
         const data = await res.json();
   
         brandToEdit = data;
-        brandName.value = data.name;
+        name.value = data.name;
         cancelEditBrandBtn.classList.remove('hidden');
   
         return;
@@ -100,14 +96,14 @@ export const brandModule = () => {
       if (e.target.closest('.deleteBrandBtn') !== null) {
         
         if (confirm('Are you sure you want to delete this brand?')) {
-          const { brandName, cancelEditBrandBtn } = brandForm.elements;
+          const { name, cancelEditBrandBtn } = brandForm.elements;
 
           const deleteBrandBtn = e.target.closest('.deleteBrandBtn');
           const id = deleteBrandBtn.dataset.id;
           
           deleteBrandBtn.closest('li').remove();
           brandToEdit = undefined;
-          brandName.value = '';
+          name.value = '';
           !cancelEditBrandBtn.classList.contains('hidden') && cancelEditBrandBtn.classList.add('hidden');
           
           await fetch(`/api/brands/${id}`, { method: 'DELETE' });
@@ -121,7 +117,7 @@ export const brandModule = () => {
 
   cancelEditBrandBtn.addEventListener("click", (e) => {
     brandToEdit = undefined;
-    brandForm.elements.brandName.value = '';
+    brandForm.elements.name.value = '';
     e.target.classList.add('hidden');
   });
 

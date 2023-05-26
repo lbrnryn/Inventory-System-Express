@@ -21,36 +21,6 @@ router.get('/', async (req, res, next) => {
     } catch (err) { next(err) }
 });
 
-// POST - /parts - Add Single Part 
-router.post('/parts', async (req, res, next) => {
-    try {
-    //   const nameExist = await Part.findOne({ name: req.body.partname, brand: req.body.brandname });
-    //   if (nameExist) {
-    //     console.log('Part is already exist');
-    //     res.redirect('/parts');
-    //     return;
-    //   }
-        await Part.create({ name: req.body.partname, brand: req.body.brandname });
-        res.redirect('/');
-    } catch (err) { next(err) }
-});
-
-// PUT - /parts/:id - Edit a part
-router.put('/parts/:id', async (req, res, next) => {
-    try {
-        await Part.findByIdAndUpdate({ _id: req.params.id }, { name: req.body.partname, brand: req.body.brandname });
-        res.redirect('/');
-    } catch (err) { next(err) }
-});
-
-// DELETE - /parts/:id - Delete a brand
-router.delete('/parts/:id', async (req, res, next) => {
-    try {
-        await Part.findByIdAndDelete({ _id: req.params.id });
-        res.redirect('/');
-    } catch (err) { next(err) }
-});
-
 // POST - /stocks - Add a stock
 router.post('/stocks', async (req, res, next) => {
     try {

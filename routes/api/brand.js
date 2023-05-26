@@ -4,7 +4,7 @@ const asyncHandler = require('../../asyncHandler');
 
 // /api/brands/:id
 router.route('/:id')
-  // Get brand data
+  // Get brand
   .get(asyncHandler(async (req, res) => {
     const result = await Brand.findById({ _id: req.params.id });
     res.json(result);
@@ -19,7 +19,7 @@ router.route('/:id')
     await Brand.findByIdAndDelete(req.params.id);
   }))
 
-// POST - /api/brands - Add a brand
+// /api/brands - Create a brand
 router.post('/', asyncHandler(async (req, res) => {
   const newBrand = await Brand.create(req.body);
   res.json(newBrand);

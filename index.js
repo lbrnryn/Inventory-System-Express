@@ -5,18 +5,15 @@ const methodOverride = require('method-override');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-(async function main() {
-  try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/inventory');
-    console.log('Database Connected!');
-  } catch (err) { next(err) };
-})()
+mongoose.connect('mongodb://127.0.0.1:27017/inventory')
+  .catch(err => { console.error(err) });
 
 const app = express();
 
 app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
