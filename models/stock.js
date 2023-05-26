@@ -1,13 +1,8 @@
 const mongoose = require('mongoose');
-const Part = require('./part');
-
-const part = new mongoose.Schema({
-  name: { type: String, trim: true},
-  brand: { type: String, trim: true}
-})
 
 const stock = new mongoose.Schema({
-  part: part,
+  brand: { type: mongoose.Schema.Types.ObjectId, ref: 'Brand' },
+  part: { type: mongoose.Schema.Types.ObjectId, ref: 'Part' },
   quantity: Number,
   price: Number
 }, { timestamps: true });

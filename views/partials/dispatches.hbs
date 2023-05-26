@@ -1,7 +1,7 @@
 <div class='text-sm grid gap-5'>
     <form id='editDispatchForm' class='grid gap-3' action='/dispatches' method='post'>
         <div class="grid grid-cols-2 gap-5">
-            <select id='plateNumber' class='' name='plateNumber'>
+            <select name='plateNumber'>
                 <option value=''>Choose a unit...</option>
                 {{#each units}}
                     <option class='' value='{{this.plateNumber}}'>{{this.plateNumber}}</option>
@@ -16,7 +16,7 @@
         </div>
         <div class='text-white flex justify-between items-center'>
             <div class='text-xs font-bold'>
-                <button class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg' id='submitBtn'>Submit</button>
+                <button type='submit' class='bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded-lg' id='submitBtn'>Submit</button>
             </div>
             <span>{{dispatches.length}}</span>
         </div>

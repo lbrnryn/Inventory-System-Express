@@ -22,13 +22,13 @@ router.route('/:id')
 
 // /api/parts
 router.route('/')
-  // // Get parts
-  // .get(async (req, res, next) => {
-  //   try {
-  //     const parts = await Part.find(req.query).populate('brand');
-  //     res.json(parts);
-  //   } catch (err) { next(err) }
-  // })
+  // Get parts
+  .get(async (req, res, next) => {
+    try {
+      const parts = await Part.find(req.query).populate('brand');
+      res.json(parts);
+    } catch (err) { next(err) }
+  })
   // Create a part
   .post(asyncHandler(async (req, res, next) => {
     const newPart = await Part.create(req.body);
