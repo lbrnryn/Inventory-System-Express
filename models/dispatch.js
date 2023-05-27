@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const dispatch = new mongoose.Schema({
-  plateNumber: String,
+  unit: { type: mongoose.Schema.Types.ObjectId, ref: 'Unit' },
   stock: { type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }
 }, { timestamps: true });
 

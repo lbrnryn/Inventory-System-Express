@@ -20,7 +20,6 @@ app.set('json spaces', 2);
 
 // Views Routes
 app.use("/", require("./routes/index"));
-app.use('/dispatches', require('./routes/dispatch'));
 
 // Api Routes
 app.use('/api/brands', require('./routes/api/brand'));
