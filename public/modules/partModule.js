@@ -1,6 +1,4 @@
 export const partModule = () => {
-  const getParts = document.querySelectorAll('.getPart'); // Get Part Records
-
   const partForm = document.querySelector('#partForm');
   const partList = document.querySelector('#partList');
   let partToEdit;

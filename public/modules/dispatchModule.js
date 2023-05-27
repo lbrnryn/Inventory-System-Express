@@ -1,5 +1,3 @@
-import { Http } from './httpClass.js';
-
 export function dispatchModule() {
   const editDispatches = document.querySelectorAll(".editDispatch");
 

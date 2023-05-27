@@ -15,9 +15,7 @@ router.route('/:id')
       res.json(updBrand);
   }))
   // Deletes a brand
-  .delete(asyncHandler(async (req, res) => {
-    await Brand.findByIdAndDelete(req.params.id);
-  }))
+  .delete(asyncHandler(async (req, res) => await Brand.findByIdAndDelete(req.params.id)))
 
 // /api/brands - Create a brand
 router.post('/', asyncHandler(async (req, res) => {

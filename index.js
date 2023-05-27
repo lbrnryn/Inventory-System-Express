@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const { engine } = require('express-handlebars');
-const methodOverride = require('method-override');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
@@ -10,11 +9,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/inventory')
 
 const app = express();
 
-app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
@@ -23,14 +20,13 @@ app.set('json spaces', 2);
 
 // Views Routes
 app.use("/", require("./routes/index"));
-app.use('/units', require('./routes/unit'));
 app.use('/dispatches', require('./routes/dispatch'));
 
 // Api Routes
 app.use('/api/brands', require('./routes/api/brand'));
 app.use('/api/parts', require('./routes/api/part'));
 app.use('/api/stocks', require('./routes/api/stock'));
-// app.use('/api/units', require('./routes/api/unit'));
+app.use('/api/units', require('./routes/api/unit'));
 app.use('/api/dispatches', require('./routes/api/dispatch'));
 
 app.get('/pagenotfound', (req, res) => res.render('pagenotfound'));

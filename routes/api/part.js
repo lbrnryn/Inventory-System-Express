@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require("express").Router();
 const Part = require('../.././models/part');
 const asyncHandler = require('../../asyncHandler');
 
@@ -16,19 +15,15 @@ router.route('/:id')
     res.json(updPart);
   }))
   // Deletes a part
-  .delete(asyncHandler(async (req, res) => {
-    await Part.findByIdAndDelete(req.params.id);
-  }))
+  .delete(asyncHandler(async (req, res) => await Part.findByIdAndDelete(req.params.id)))
 
 // /api/parts
 router.route('/')
   // Get parts
-  .get(async (req, res, next) => {
-    try {
-      const parts = await Part.find(req.query).populate('brand');
-      res.json(parts);
-    } catch (err) { next(err) }
-  })
+  .get(asyncHandler(async (req, res, next) => {
+    const parts = await Part.find(req.query).populate('brand');
+    res.json(parts);
+  }))
   // Create a part
   .post(asyncHandler(async (req, res, next) => {
     const newPart = await Part.create(req.body);
