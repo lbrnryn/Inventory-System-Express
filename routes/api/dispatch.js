@@ -2,45 +2,41 @@ const express = require('express');
 const router = express.Router();
 const Dispatch = require('../.././models/dispatch');
 const Stock = require('../.././models/stock');
+const asyncHandler = require('../../asyncHandler');
 
 // /api/dispatches/:id
 router.route('/:id')
-  .get(async (req, res, next) => {
-    try {
-      const dispatch = await Dispatch.findById(req.params.id);
-      res.json(dispatch);
-    } catch (err) { next(err) }
-  })
-  .put(async (req, res, next) => {
-    const { unit, stock, quantity } = req.body;
+  .get(asyncHandler(async (req, res) => {
+    const dispatch = await Dispatch.findById(req.params.id).populate('unit').populate('stock');
+    res.json(dispatch);
+  }))
+  .put(asyncHandler(async (req, res) => {
+    const updDispatch = await Dispatch.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-    let dispatch = {
-      unit: unit,
-      stock: stock,
-      quantity: quantity
-    }
-    Dispatch.findByIdAndUpdate(req.params.id, dispatch, (err, dispatch) => {
-      if (err) { next(err) }
-      res.redirect('/');
-    })
-  })
+    const dispatch = await Dispatch.findById(updDispatch._id).populate('unit').populate('stock').lean();
+
+    const stock = await Stock.findById(dispatch.stock._id).populate('brand').populate('part');
+    
+    dispatch.stock.brand = stock.brand;
+    dispatch.stock.part = stock.part;
+    res.json(dispatch);
+  }))
+  .delete(asyncHandler(async (req, res) => await Dispatch.findByIdAndDelete(req.params.id)))
 
 // /api/dispatches
 router.route('/')
-  .get(async (req, res, next) => {
+  .get(asyncHandler(async (req, res) => {
     const dispatches = await Dispatch.find(req.query);
     res.json(dispatches);
-  })
-  .post(async (req, res, next) => {
-    try {
-      const newDispatch = await Dispatch.create(req.body);
-      const updStock = await Stock.findByIdAndUpdate(newDispatch.stock, { $inc: { quantity: -1 } }, { new: true });
+  }))
+  .post(asyncHandler(async (req, res) => {
+    const newDispatch = await Dispatch.create(req.body);
+    const updStock = await Stock.findByIdAndUpdate(newDispatch.stock, { $inc: { quantity: -1 } }, { new: true });
 
-      const dispatch = await Dispatch.findById(newDispatch._id).populate('unit').populate('stock').lean();
-      const stock = await Stock.findById(updStock._id).populate('brand').populate('part');
+    const dispatch = await Dispatch.findById(newDispatch._id).populate('unit').populate('stock').lean();
+    const stock = await Stock.findById(updStock._id).populate('brand').populate('part');
 
-      res.json({ dispatch, stock });
-    } catch (err) { next(err) }
-  })
+    res.json({ dispatch, stock });
+  }))
 
 module.exports = router;
