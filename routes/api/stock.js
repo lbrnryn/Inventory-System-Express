@@ -35,7 +35,7 @@ router.route('/')
   .post(asyncHandler(async (req, res) => {
     const { part, quantity, brand, price } = req.body;
 
-    const foundPart = await Part.findOne({name: part, brand});
+    const foundPart = await Part.findOne({ name: part, brand });
 
     const newStock = await Stock.create({
       brand,

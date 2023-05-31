@@ -6,7 +6,7 @@ const asyncHandler = require('../../asyncHandler');
 router.route('/:id')
   // Get part
   .get(asyncHandler(async (req, res) => {
-    const part = await Part.findById(req.params.id).populate('brand').lean();
+    const part = await Part.findById(req.params.id).populate('brand');
     res.json(part);
   }))
   // Updates a part

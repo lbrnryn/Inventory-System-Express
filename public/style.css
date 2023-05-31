@@ -14,10 +14,3 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-
-/* #cancelEditBrandBtn, #cancelEditPartBtn, #cancelEditStockBtn, #cancelEditUnitBtn, .hiddenBtn { display: none; }  
-
-option { background-color: #10111e; }
-
-li, table { background-color: #141522; } */

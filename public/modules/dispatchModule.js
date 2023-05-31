@@ -50,7 +50,7 @@ export function dispatchModule() {
         body: JSON.stringify({ unit: unit.value, stock: stock.value })
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
   
       const tr = document.createElement('tr');
       tr.dataset.id = data.dispatch._id;

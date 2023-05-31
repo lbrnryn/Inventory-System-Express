@@ -3,6 +3,7 @@ export function unitModule() {
   const unitList = document.querySelector('#unitList');
   const cancelEditUnitBtn = document.querySelector('#cancelEditUnitBtn');
   let unitToEdit;
+  const dispatchForm = document.querySelector('#dispatchForm');
 
   unitForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ export function unitModule() {
         body: JSON.stringify({ plateNumber: plateNumber.value })
       });
       const data = await res.json();
-
+      console.log(data);
       const matchedLi = Array.from(unitList.children).find(li => li.dataset.id === data._id);
       matchedLi.innerHTML = `
         ${data.plateNumber}
@@ -36,6 +37,9 @@ export function unitModule() {
       plateNumber.value = '';
       cancelEditUnitBtn.classList.add('hidden');
 
+      // Updates option element in dispatchForm's unit select element
+      Array.from(dispatchForm.elements.unit.children).find(option => option.value === data._id).innerText = data.plateNumber;
+
     } else {
       const res = await fetch('/api/units', {
         method: 'POST',
@@ -43,7 +47,7 @@ export function unitModule() {
         body: JSON.stringify({ plateNumber: plateNumber.value })
       });
       const data = await res.json();
-      // console.log(data);
+      console.log(data);
       const li = document.createElement('li');
       li.className = 'flex justify-between';
       li.dataset.id = data._id;
@@ -64,6 +68,14 @@ export function unitModule() {
       `;
       unitList.appendChild(li);
       plateNumber.value = '';
+
+      // Creates and add option element in dispatchForm's unit select element
+      const option = document.createElement('option');
+      option.value = data._id;
+      option.innerText = data.plateNumber;
+
+      dispatchForm.elements.unit.appendChild(option);
+
     }
   });
 

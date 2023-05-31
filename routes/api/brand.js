@@ -6,7 +6,7 @@ const asyncHandler = require('../../asyncHandler');
 router.route('/:id')
   // Get brand
   .get(asyncHandler(async (req, res) => {
-    const result = await Brand.findById({ _id: req.params.id });
+    const result = await Brand.findById(req.params.id);
     res.json(result);
   }))
   // Updates a brand
