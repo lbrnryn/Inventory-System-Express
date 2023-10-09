@@ -1,8 +1,8 @@
-import { brandModule } from './modules/brandModule.js';
-import { partModule } from './modules/partModule.js';
-import { stockModule } from './modules/stockModule.js';
-import { unitModule } from './modules/unitModule.js';
-import { dispatchModule } from './modules/dispatchModule.js';
+import { brandModule } from './modules/brand.js';
+import { partModule } from './modules/part.js';
+import { stockModule } from './modules/stock.js';
+import { unitModule } from './modules/unit.js';
+import { dispatchModule } from './modules/dispatch.js';
 
 brandModule();
 partModule();

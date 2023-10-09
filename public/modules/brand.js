@@ -4,6 +4,8 @@ export const brandModule = () => {
   const brandList = document.querySelector('#brandList');
   let brandToEdit;
   const cancelEditBrandBtn = document.querySelector('#cancelEditBrandBtn');
+  const brandsCount = document.querySelector('#brandsCount');
+  const brandSelect = document.querySelector('#partForm').elements.brand;
 
   brandForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -40,6 +42,9 @@ export const brandModule = () => {
       name.value = '';
       cancelEditBrandBtn.classList.add('hidden');
 
+      // Find option element with the same value as the data._id and update the innerText
+      Array.from(brandSelect.children).find(option => option.value === data._id).innerText = data.name;
+
     } else {
 
       const res = await fetch('/api/brands', {
@@ -48,7 +53,8 @@ export const brandModule = () => {
         body: JSON.stringify({ name: name.value })
       });
       const data = await res.json();
-  
+      
+      // Create and add li element in brandList
       const li = document.createElement('li');
       li.className = 'flex justify-between';
       li.dataset.id = data._id;
@@ -69,6 +75,14 @@ export const brandModule = () => {
       `;
       brandList.appendChild(li);
       name.value = '';
+
+      brandsCount.innerText = brandList.children.length;
+
+      // Create and add option element in brandSelect element of partForm
+      const option = document.createElement('option');
+      option.value = data._id;
+      option.innerText = data.name;
+      brandSelect.appendChild(option);
 
     }
 
@@ -105,6 +119,11 @@ export const brandModule = () => {
           brandToEdit = undefined;
           name.value = '';
           !cancelEditBrandBtn.classList.contains('hidden') && cancelEditBrandBtn.classList.add('hidden');
+
+          // Find option element with the same value as the data._id and delete it
+          Array.from(brandSelect.children).find(option => option.value === id).remove();
+
+          brandsCount.innerText = brandList.children.length;
           
           await fetch(`/api/brands/${id}`, { method: 'DELETE' });
         }
